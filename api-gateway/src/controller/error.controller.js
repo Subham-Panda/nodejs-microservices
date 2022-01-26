@@ -1,6 +1,7 @@
 /* eslint-disable no-param-reassign */
-const AppError = require('../util/AppError');
+const AppError = require('../util/AppError.util');
 const logger = require('../logger/logger');
+const config = require('../config');
 
 const sendErrorDev = (err, req, res) => {
     // API
@@ -57,9 +58,9 @@ module.exports = (err, req, res, next) => {
     err.statusCode = err.statusCode || 500;
     err.status = err.status || 'error';
 
-    if (process.env.NODE_ENV === 'development') {
+    if (config.NODE_ENV === 'development') {
         sendErrorDev(err, req, res);
-    } else if (process.env.NODE_ENV === 'production') {
+    } else if (config.NODE_ENV === 'production') {
         let error = { ...err };
         error.message = err.message;
         sendErrorProd(error, req, res);

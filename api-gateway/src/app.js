@@ -3,7 +3,7 @@ const cors = require('cors');
 
 const requestTime = require('./middleware/request-time');
 const loggingFilter = require('./middleware/logging-filter');
-const AppError = require('./util/AppError');
+const AppError = require('./util/AppError.util');
 const globalErrorHandler = require('./controller/error.controller');
 
 const apiRouter = require('./router');

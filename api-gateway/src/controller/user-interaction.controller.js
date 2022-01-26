@@ -1,8 +1,8 @@
 const Queues = require('../enum/queues');
 const Services = require('../enum/services');
-const catchAsync = require('../util/catchAsync');
-const QueueUtil = require('../util/QueueUtil');
-const sendCustomResponse = require('../util/sendCustomResponse');
+const catchAsync = require('../util/catchAsync.util');
+const QueueUtil = require('../util/queue.util');
+const sendCustomResponse = require('../util/sendCustomResponse.util');
 
 const serviceName = Services.INTERACTION_SERVICE;
 

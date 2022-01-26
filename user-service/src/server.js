@@ -1,13 +1,14 @@
 const config = require('./config');
 const logger = require('./logger/logger');
-const { connectRabbitMQ } = require('./util/queue.util');
+const connectDatabase = require('./db/db');
+const { connectRabbitMQ, initializeQueues } = require('./util/queue.util');
 
 // uncaught exception dealer
 process.on('uncaughtException', (err) => {
-    logger.error('UNCAUGHT EXCPETION!💥 NODE NOT EXITING...');
+    logger.error('UNCAUGHT EXCPETION!💥 Shutting down...');
     logger.error(err);
 
-    // process.exit(1);
+    process.exit(1);
 });
 
 const app = require('./app');
@@ -16,15 +17,21 @@ const app = require('./app');
 const port = config.PORT;
 const server = app.listen(port, async () => {
     logger.info(`App running on port ${port}...`);
+
+    await connectDatabase();
+
     await connectRabbitMQ();
+
+    await initializeQueues();
+
 });
 
 // Global unhandled rejection dealer
 process.on('unhandledRejection', (err) => {
-    logger.error('UNHANDLED REJECTION!💥 NODE NOT EXITING...');
+    logger.error('UNHANDLED REJECTION!💥 Shutting down...');
     logger.error(err);
 
-    // server.close(() => {
-    //     process.exit(1);
-    // });
+    server.close(() => {
+        process.exit(1);
+    });
 });
