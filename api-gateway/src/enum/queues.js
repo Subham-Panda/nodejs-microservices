@@ -7,6 +7,8 @@ const Queues = {
     CONTENT_READ: 'content.read',
     CONTENT_UPDATE: 'content.update',
     CONTENT_DELETE: 'content.delete',
+    CONTENT_NEW: 'content.new',
+    CONTENT_TOP: 'content.top',
     INTERACTION_READ: 'interaction.read',
     INTERACTION_LIKE: 'interaction.like',
     INTERACTION_UNLIKE: 'interaction.unlike',

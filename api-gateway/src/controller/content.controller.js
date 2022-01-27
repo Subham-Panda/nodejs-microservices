@@ -37,3 +37,20 @@ exports.deleteContent = catchAsync(async (req, res, next) => {
     );
 
 });
+
+exports.getNewContent = catchAsync(async (req, res, next) => {
+    const { total } = req.body
+
+    await QueueUtil.sendMessageToQueue(
+        res, Queues.CONTENT_NEW, {}, {}, { total }
+    );
+
+});
+
+exports.getTopContent = catchAsync(async (req, res, next) => {
+    const { total } = req.body
+
+    await QueueUtil.sendMessageToQueue(
+        res, Queues.CONTENT_TOP, {}, {}, { total }
+    )
+})
