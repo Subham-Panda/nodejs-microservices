@@ -10,6 +10,36 @@ const createUserDbHandler = async (data) => {
     }   
 }
 
+const getUserDbHandler = async (data) => {
+    try {
+        const users = await User.find(data);
+        return users;
+    } catch (error) {
+        return { error: error };
+    }  
+}
+
+const updateUserDbHandler = async (data) => {
+    try {
+        const updatedUsers = await User.updateMany(data.filter, data.update, { new: true });
+        return updatedUsers;
+    } catch (error) {
+        return { error: error };
+    }  
+}
+
+const deleteUserDbHandler = async (data) => {
+    try {
+        const deletedUsers = await User.deleteMany(data);
+        return deletedUsers;
+    } catch (error) {
+        return { error: error };
+    }  
+}
+
 module.exports = {
-    createUserDbHandler
+    createUserDbHandler,
+    getUserDbHandler,
+    updateUserDbHandler,
+    deleteUserDbHandler
 }
