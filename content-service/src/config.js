@@ -6,7 +6,7 @@ dotenv.config({path: '../env'});
 
 const config = {
     NODE_ENV: process.env.NODE_ENV || 'development',
-    PORT: process.env.PORT || 4000,
+    PORT: process.env.PORT || 5000,
     RABBITMQ_URL: process.env.RABBITMQ_URL || 'amqp://localhost:5672',
     MONGO_URL: process.env.MONGO_URL || 'mongodb://localhost:27017/contentService',
 };
