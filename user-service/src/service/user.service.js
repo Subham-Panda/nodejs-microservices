@@ -16,7 +16,7 @@ const createUser = async (data) => {
     return response;
 }
 
-const getUser = (data) => {
+const getUser = async (data) => {
     const validationResponse = getUserServiceSchema.validate(data)
 
     if (validationResponse.error) {
@@ -29,7 +29,7 @@ const getUser = (data) => {
     return response;
 }
 
-const updateUser = (data) => {
+const updateUser = async (data) => {
     const validationResponse = updateUserServiceSchema.validate(data)
 
     if (validationResponse.error) {
@@ -42,7 +42,7 @@ const updateUser = (data) => {
     return response;
 }
 
-const deleteUser = (data) => {
+const deleteUser = async (data) => {
     const validationResponse = deleteUserServiceSchema.validate(data)
 
     if (validationResponse.error) {

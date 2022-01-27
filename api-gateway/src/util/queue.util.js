@@ -25,11 +25,12 @@ const sendMessageToQueue = async (res, queueName, queueOptions, consumeOptions, 
         const correlationId = uuidv4();
         await channel.sendToQueue(queueName, Buffer.from(message ? JSON.stringify(message) : ''), { replyTo: assertQueue.queue, correlationId });
         channel.consume(assertQueue.queue, async (consumeMessage) => {
-            if (consumeMessage.properties.correlationId === correlationId) {
+            if (consumeMessage && consumeMessage.properties.correlationId === correlationId) {
                 const responseMessageContent = JSON.parse(consumeMessage.content.toString());
                 const serviceName = getServiceName(queueName);
                 sendCustomResponse(res, 201, responseMessageContent, serviceName);
             }
+            await connection.close();
         }, consumeOptions);
     }
 };

@@ -1,5 +1,4 @@
 const User = require('../model/user.model');
-// const logger = require('../../logger/logger');
 
 const createUserDbHandler = async (data) => {
     try {
@@ -12,7 +11,7 @@ const createUserDbHandler = async (data) => {
 
 const getUserDbHandler = async (data) => {
     try {
-        const users = await User.find(data);
+        const users = await User.find(data.filter);
         return users;
     } catch (error) {
         return { error: error };
@@ -30,7 +29,7 @@ const updateUserDbHandler = async (data) => {
 
 const deleteUserDbHandler = async (data) => {
     try {
-        const deletedUsers = await User.deleteMany(data);
+        const deletedUsers = await User.deleteMany(data.filter);
         return deletedUsers;
     } catch (error) {
         return { error: error };

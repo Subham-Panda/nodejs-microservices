@@ -23,6 +23,7 @@ const consumeFromQueue = async (queue, queueOptions, consumeOptions, consumerSer
         channel.prefetch(1);
 
         await channel.consume(queue, async (consumeMessage) => {
+            
             if (consumeMessage && consumeMessage.content && consumeMessage.content.length > 0) {
 
                 try {
