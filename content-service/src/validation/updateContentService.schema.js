@@ -1,6 +1,6 @@
 const Joi = require('joi');
 
-const updateUserServiceSchema = Joi.object({
+const updateContentServiceSchema = Joi.object({
     filter: Joi.alternatives().try(
         Joi.object({
             title: Joi.string().trim().optional(),
@@ -16,4 +16,4 @@ const updateUserServiceSchema = Joi.object({
     })
 })
 
-module.exports = updateUserServiceSchema;
+module.exports = updateContentServiceSchema;

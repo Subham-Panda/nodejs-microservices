@@ -76,6 +76,8 @@ const initializeQueues = async () => {
         await consumeFromQueue(Queues.CONTENT_READ, { durable: true }, { noAck: false }, contentService.getContent);
         await consumeFromQueue(Queues.CONTENT_UPDATE, { durable: true }, { noAck: false }, contentService.updateContent);
         await consumeFromQueue(Queues.CONTENT_DELETE, { durable: true }, { noAck: false }, contentService.deleteContent);
+        await consumeFromQueue(Queues.CONTENT_NEW, { durable: true }, { noAck: false }, contentService.getNewContent);
+
 
         channel.prefetch(1);
 

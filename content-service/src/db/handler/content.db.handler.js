@@ -36,9 +36,21 @@ const deleteContentDbHandler = async (data) => {
     }  
 }
 
+const getNewContentDbHandler = async (data) => {
+    try {
+        const newContents = await Content.find().limit(data.total ? data.total : 10).sort({
+            createdAt: -1
+        })
+        return newContents;
+    } catch (error) {
+        return { error: error };
+    }  
+}
+
 module.exports = {
     createContentDbHandler,
     getContentDbHandler,
     updateContentDbHandler,
-    deleteContentDbHandler
+    deleteContentDbHandler,
+    getNewContentDbHandler
 }

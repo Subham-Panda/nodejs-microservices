@@ -1,6 +1,6 @@
 const Joi = require('joi');
 
-const getUserServiceSchema = Joi.object({
+const getContentServiceSchema = Joi.object({
     filter: Joi.alternatives().try(
         Joi.object({
             title: Joi.string().trim().optional(),
@@ -12,4 +12,4 @@ const getUserServiceSchema = Joi.object({
     )
 }).options({ abortEarly: false });
 
-module.exports = getUserServiceSchema;
+module.exports = getContentServiceSchema;

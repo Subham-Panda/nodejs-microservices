@@ -1,13 +1,13 @@
 const Joi = require('joi');
-const { createContentServiceSchema, getContentServiceSchema, updateContentServiceSchema, deleteContentServiceSchema } = require('../validation');
-const { createContentDbHandler, getContentDbHandler, updateContentDbHandler, deleteContentDbHandler } = require('../db/handler/content.db.handler');
+const { createContentServiceSchema, getContentServiceSchema, updateContentServiceSchema, deleteContentServiceSchema, getNewContentServiceSchema } = require('../validation');
+const { createContentDbHandler, getContentDbHandler, updateContentDbHandler, deleteContentDbHandler, getNewContentDbHandler } = require('../db/handler/content.db.handler');
 const logger = require('../logger/logger');
 
 const createContent = async (data) => {
     const validationResponse = createContentServiceSchema.validate(data)
 
     if (validationResponse.error) {
-        logger.error(`[UserService] createUser validation error: ${validationResponse.error.details[0].message}`);
+        logger.error(`[ContentService] createContent validation error: ${validationResponse.error.details[0].message}`);
         return { error: validationResponse.error.details[0].message };
     }
 
@@ -20,7 +20,7 @@ const getContent = async (data) => {
     const validationResponse = getContentServiceSchema.validate(data)
 
     if (validationResponse.error) {
-        logger.error(`[UserService] getUser validation error: ${validationResponse.error.details[0].message}`);
+        logger.error(`[ContentService] getContent validation error: ${validationResponse.error.details[0].message}`);
         return { error: validationResponse.error.details[0].message };
     }
 
@@ -33,7 +33,7 @@ const updateContent = async (data) => {
     const validationResponse = updateContentServiceSchema.validate(data)
 
     if (validationResponse.error) {
-        logger.error(`[UserService] updateUser validation error: ${validationResponse.error.details[0].message}`);
+        logger.error(`[ContentService] updateContent validation error: ${validationResponse.error.details[0].message}`);
         return { error: validationResponse.error.details[0].message };
     }
 
@@ -46,11 +46,24 @@ const deleteContent = async (data) => {
     const validationResponse = deleteContentServiceSchema.validate(data)
 
     if (validationResponse.error) {
-        logger.error(`[UserService] deleteUser validation error: ${validationResponse.error.details[0].message}`);
+        logger.error(`[ContentService] deleteContent validation error: ${validationResponse.error.details[0].message}`);
         return { error: validationResponse.error.details[0].message };
-    }   
+    }
 
     const response = await deleteContentDbHandler(data);
+
+    return response;
+}
+
+const getNewContent = async (data) => {
+    const validationResponse = getNewContentServiceSchema.validate(data)
+
+    if (validationResponse.error) {
+        logger.error(`[ContentService] getNewContent validation error: ${validationResponse.error.details[0].message}`);
+        return { error: validationResponse.error.details[0].message };
+    }
+
+    const response = await getNewContentDbHandler(data);
 
     return response;
 }
@@ -60,4 +73,5 @@ module.exports = {
     getContent,
     updateContent,
     deleteContent,
+    getNewContent
 }
