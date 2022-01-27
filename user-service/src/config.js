@@ -2,7 +2,7 @@ const dotenv = require('dotenv');
 
 const logger = require('./logger/logger');
 
-dotenv.config({path: '../env'});
+dotenv.config();
 
 const config = {
     NODE_ENV: process.env.NODE_ENV || 'development',
