@@ -57,9 +57,10 @@ const readContentDbHandler = async (data) => {
 const createInteractionDbHandler = async (data) => {
     try {
         await Interaction.create({
-            content: data.content_id,
+            content: data._id,
             liked_users: [],
-            read_users: []
+            read_users: [],
+            inc_id: data.inc_id
         })
     } catch (error) {
         return { error: error };

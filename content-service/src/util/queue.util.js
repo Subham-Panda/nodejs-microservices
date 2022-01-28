@@ -30,7 +30,7 @@ const consumeFromQueueAndReply = async (queue, queueOptions, consumeOptions, con
                     const response = await consumerService(JSON.parse(consumeMessage.content.toString()));
 
                     if(queue === Queues.CONTENT_CREATE) {
-                        channel.sendToQueue(Queues.INTERACTION_CREATE, Buffer.from(JSON.stringify({content_id: response._id})));
+                        channel.sendToQueue(Queues.INTERACTION_CREATE, Buffer.from(JSON.stringify({content: response})));
                     }
 
                     channel.sendToQueue(consumeMessage.properties.replyTo, Buffer.from(JSON.stringify(response)), { correlationId: consumeMessage.properties.correlationId });
