@@ -1,6 +1,6 @@
 const Joi = require('joi');
-const { interactionContentServiceSchema,createInteractionServiceSchema } = require('../validation');
-const { likeContentDbHandler, unlikeContentDbHandler, readContentDbHandler, createInteractionDbHandler } = require('../db/handler/interaction.db.handler');
+const { interactionContentServiceSchema,createInteractionServiceSchema, interactionTopContentServiceSchema } = require('../validation');
+const { likeContentDbHandler, unlikeContentDbHandler, readContentDbHandler, createInteractionDbHandler, getTopContentsDbHandler } = require('../db/handler/interaction.db.handler');
 const logger = require('../logger/logger');
 const QueueUtil = require('../util/queue.util');
 const Queues = require('../enum/queues');
@@ -55,9 +55,23 @@ const createInteraction = async (data) => {
     await createInteractionDbHandler(data);
 }
 
-module.exports = {
+const getTopContents= async (data) => {
+    const validationResponse = interactionTopContentServiceSchema.validate(data)
+
+    if (validationResponse.error) {
+        logger.error(`[InteractionService] getTopContents validation error: ${validationResponse.error.details[0].message}`);
+        return { error: validationResponse.error.details[0].message };
+    }
+
+    const response = await getTopContentsDbHandler(data); 
+
+    return response;
+}
+
+module.exports = { 
     likeContent,
     unlikeContent,
     readContent,
-    createInteraction
+    createInteraction,
+    getTopContents
 }

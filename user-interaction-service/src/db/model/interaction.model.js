@@ -17,6 +17,11 @@ const interactionSchema = new mongoose.Schema({
     read_users: {
         type: [String],
         default: []
+    },
+    total_interactions: {
+        type: Number,
+        default: 0,
+        required: true
     }
 }, {
     timestamps: true,

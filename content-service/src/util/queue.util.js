@@ -1,4 +1,6 @@
 const amqp = require('amqplib');
+const { v4: uuidv4 } = require('uuid');
+
 const config = require('../config');
 const logger = require('../logger/logger');
 const Queues = require('../enum/queues');
@@ -27,13 +29,36 @@ const consumeFromQueueAndReply = async (queue, queueOptions, consumeOptions, con
             if (consumeMessage && consumeMessage.content && consumeMessage.content.length > 0) {
 
                 try {
-                    const response = await consumerService(JSON.parse(consumeMessage.content.toString()));
 
-                    if(queue === Queues.CONTENT_CREATE) {
-                        channel.sendToQueue(Queues.INTERACTION_CREATE, Buffer.from(JSON.stringify({content: response})));
+                    if (queue === Queues.CONTENT_TOP) {
+
+                        channel.assertQueue(Queues.INTERACTION_TOP_CONTENTS, queueOptions);
+                        const assertQueue = await channel.assertQueue('', { exclusive: true });
+                        const correlationId = uuidv4();
+                        await channel.sendToQueue(Queues.INTERACTION_TOP_CONTENTS, Buffer.from(consumeMessage.content.toString()), { replyTo: assertQueue.queue, correlationId });
+
+                        channel.consume(assertQueue.queue, async (topContentsResponse) => {
+                            if (topContentsResponse && topContentsResponse.properties.correlationId === correlationId) {
+
+                                const response = await consumerService(JSON.parse(topContentsResponse.content.toString()));
+                                console.log("RESPONSE: ", response);
+                                channel.sendToQueue(consumeMessage.properties.replyTo, Buffer.from(JSON.stringify(response)), { correlationId: consumeMessage.properties.correlationId });
+                            }
+                            channel.ack(topContentsResponse);
+                        }, {})
+
+                    } else {
+
+                        const response = await consumerService(JSON.parse(consumeMessage.content.toString()));
+
+                        if (queue === Queues.CONTENT_CREATE) {
+                            channel.sendToQueue(Queues.INTERACTION_CREATE, Buffer.from(JSON.stringify({ content: response })));
+                        }
+    
+                        channel.sendToQueue(consumeMessage.properties.replyTo, Buffer.from(JSON.stringify(response)), { correlationId: consumeMessage.properties.correlationId });
+
                     }
 
-                    channel.sendToQueue(consumeMessage.properties.replyTo, Buffer.from(JSON.stringify(response)), { correlationId: consumeMessage.properties.correlationId });
                 } catch (error) {
                     channel.sendToQueue(consumeMessage.properties.replyTo, Buffer.from(JSON.stringify({ error })), { correlationId: consumeMessage.properties.correlationId });
                 }
@@ -82,6 +107,7 @@ const initializeQueues = async () => {
         await consumeFromQueueAndReply(Queues.CONTENT_UPDATE, { durable: true }, { noAck: false }, contentService.updateContent);
         await consumeFromQueueAndReply(Queues.CONTENT_DELETE, { durable: true }, { noAck: false }, contentService.deleteContent);
         await consumeFromQueueAndReply(Queues.CONTENT_NEW, { durable: true }, { noAck: false }, contentService.getNewContent);
+        await consumeFromQueueAndReply(Queues.CONTENT_TOP, { durable: true }, { noAck: false }, contentService.getTopContent);
 
 
         channel.prefetch(1);

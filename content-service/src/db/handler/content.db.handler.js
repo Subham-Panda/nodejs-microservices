@@ -6,7 +6,7 @@ const createContentDbHandler = async (data) => {
         return newContent;
     } catch (error) {
         return { error: error };
-    }   
+    }
 }
 
 const getContentDbHandler = async (data) => {
@@ -15,7 +15,7 @@ const getContentDbHandler = async (data) => {
         return contents;
     } catch (error) {
         return { error: error };
-    }  
+    }
 }
 
 const updateContentDbHandler = async (data) => {
@@ -24,7 +24,7 @@ const updateContentDbHandler = async (data) => {
         return updatedContents;
     } catch (error) {
         return { error: error };
-    }  
+    }
 }
 
 const deleteContentDbHandler = async (data) => {
@@ -33,7 +33,7 @@ const deleteContentDbHandler = async (data) => {
         return deletedContents;
     } catch (error) {
         return { error: error };
-    }  
+    }
 }
 
 const getNewContentDbHandler = async (data) => {
@@ -44,7 +44,38 @@ const getNewContentDbHandler = async (data) => {
         return newContents;
     } catch (error) {
         return { error: error };
-    }  
+    }
+}
+
+const getTopContentDbHandler = async (data) => {
+    try {
+        const topContentIds = data.top_contents.map(content => content.content);
+        const topContents = await Content.aggregate([
+            {
+                $match: {
+                    _id: {
+                        $in: topContentIds
+                    }
+                }
+            },
+            { 
+                $addFields: { 
+                    "__order": { 
+                        $indexOfArray: [topContentIds, "_id"] 
+                    } 
+                }
+            },
+            { 
+                $sort: { 
+                    "__order": 1 
+                } 
+            }
+        ]);
+
+        return topContents;
+    } catch (error) {
+        return { error: error };
+    }
 }
 
 module.exports = {

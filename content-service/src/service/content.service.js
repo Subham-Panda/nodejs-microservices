@@ -1,6 +1,6 @@
 const Joi = require('joi');
-const { createContentServiceSchema, getContentServiceSchema, updateContentServiceSchema, deleteContentServiceSchema, getNewContentServiceSchema } = require('../validation');
-const { createContentDbHandler, getContentDbHandler, updateContentDbHandler, deleteContentDbHandler, getNewContentDbHandler } = require('../db/handler/content.db.handler');
+const { createContentServiceSchema, getContentServiceSchema, updateContentServiceSchema, deleteContentServiceSchema, getNewContentServiceSchema, getTopContentServiceSchema } = require('../validation');
+const { createContentDbHandler, getContentDbHandler, updateContentDbHandler, deleteContentDbHandler, getNewContentDbHandler, getTopContentDbHandler } = require('../db/handler/content.db.handler');
 const logger = require('../logger/logger');
 
 const createContent = async (data) => {
@@ -68,10 +68,24 @@ const getNewContent = async (data) => {
     return response;
 }
 
+const getTopContent = async (data) => {
+    const validationResponse = getTopContentServiceSchema.validate(data)
+
+    if (validationResponse.error) {
+        logger.error(`[ContentService] getTopContents validation error: ${validationResponse.error.details[0].message}`);
+        return { error: validationResponse.error.details[0].message };
+    }
+
+    const response = await getTopContentDbHandler(data);
+
+    return response;
+}
+
 module.exports = {
     createContent,
     getContent,
     updateContent,
     deleteContent,
-    getNewContent
+    getNewContent,
+    getTopContent
 }

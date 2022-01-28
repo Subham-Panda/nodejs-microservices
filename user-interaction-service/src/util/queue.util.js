@@ -16,7 +16,7 @@ const connectRabbitMQ = async () => {
     }
 };
 
-const consumeFromQueueAndReply= async (queue, queueOptions, consumeOptions, consumerService) => {
+const consumeFromQueueAndReply = async (queue, queueOptions, consumeOptions, consumerService, verifyUser) => {
     try {
 
         const connection = await connectRabbitMQ();
@@ -30,24 +30,30 @@ const consumeFromQueueAndReply= async (queue, queueOptions, consumeOptions, cons
 
                 try {
 
-                    // verify user
-                    channel.assertQueue(Queues.USER_VERIFY, queueOptions);
-                    const assertQueue = await channel.assertQueue('', { exclusive: true });
-                    const correlationId = uuidv4();
-                    await channel.sendToQueue(Queues.USER_VERIFY, Buffer.from(consumeMessage.content.toString()), { replyTo: assertQueue.queue, correlationId });
+                    if (verifyUser) {
+                        // verify user
+                        channel.assertQueue(Queues.USER_VERIFY, queueOptions);
+                        const assertQueue = await channel.assertQueue('', { exclusive: true });
+                        const correlationId = uuidv4();
+                        await channel.sendToQueue(Queues.USER_VERIFY, Buffer.from(consumeMessage.content.toString()), { replyTo: assertQueue.queue, correlationId });
 
-                    channel.consume(assertQueue.queue, async (verifyMessage) => {
-                        if (verifyMessage && verifyMessage.properties.correlationId === correlationId) {
-                            const responseMessageContent = JSON.parse(verifyMessage.content.toString());
-                            if (responseMessageContent.exists) {
-                                const response = await consumerService(JSON.parse(consumeMessage.content.toString()));
-                                channel.sendToQueue(consumeMessage.properties.replyTo, Buffer.from(JSON.stringify(response)), { correlationId: consumeMessage.properties.correlationId });
-                            } else {
-                                channel.sendToQueue(consumeMessage.properties.replyTo, Buffer.from(JSON.stringify({ message: "User doesnt exist"})), { correlationId: consumeMessage.properties.correlationId });
+                        channel.consume(assertQueue.queue, async (verifyMessage) => {
+                            if (verifyMessage && verifyMessage.properties.correlationId === correlationId) {
+                                const responseMessageContent = JSON.parse(verifyMessage.content.toString());
+                                if (responseMessageContent.exists) {
+                                    const response = await consumerService(JSON.parse(consumeMessage.content.toString()));
+                                    channel.sendToQueue(consumeMessage.properties.replyTo, Buffer.from(JSON.stringify(response)), { correlationId: consumeMessage.properties.correlationId });
+                                } else {
+                                    channel.sendToQueue(consumeMessage.properties.replyTo, Buffer.from(JSON.stringify({ message: "User doesnt exist" })), { correlationId: consumeMessage.properties.correlationId });
+                                }
                             }
-                        }
-                        channel.ack(verifyMessage);
-                    }, {})
+                            channel.ack(verifyMessage);
+                        }, {})
+                    } else {
+                        const response = await consumerService(JSON.parse(consumeMessage.content.toString()));
+                        channel.sendToQueue(consumeMessage.properties.replyTo, Buffer.from(JSON.stringify(response)), { correlationId: consumeMessage.properties.correlationId });
+                    }
+
                 } catch (error) {
                     channel.sendToQueue(consumeMessage.properties.replyTo, Buffer.from(JSON.stringify({ error })), { correlationId: consumeMessage.properties.correlationId });
                 }
@@ -110,9 +116,10 @@ const initializeQueues = async () => {
         const connection = await connectRabbitMQ();
         const channel = await connection.createChannel();
 
-        await consumeFromQueueAndReply(Queues.INTERACTION_READ, { durable: true }, { noAck: false }, interactionService.readContent);
-        await consumeFromQueueAndReply(Queues.INTERACTION_LIKE, { durable: true }, { noAck: false }, interactionService.likeContent);
-        await consumeFromQueueAndReply(Queues.INTERACTION_UNLIKE, { durable: true }, { noAck: false }, interactionService.unlikeContent);
+        await consumeFromQueueAndReply(Queues.INTERACTION_READ, { durable: true }, { noAck: false }, interactionService.readContent, true);
+        await consumeFromQueueAndReply(Queues.INTERACTION_LIKE, { durable: true }, { noAck: false }, interactionService.likeContent, true);
+        await consumeFromQueueAndReply(Queues.INTERACTION_UNLIKE, { durable: true }, { noAck: false }, interactionService.unlikeContent, true);
+        await consumeFromQueueAndReply(Queues.INTERACTION_TOP_CONTENTS, { durable: true }, { noAck: false }, interactionService.getTopContents, false);
         await consumeFromQueue(Queues.INTERACTION_CREATE, { durable: true }, { noAck: true }, interactionService.createInteraction);
 
         channel.prefetch(1);

@@ -8,6 +8,11 @@ const likeContentDbHandler = async (data) => {
             // add data.user to liked_users
             $addToSet: {
                 liked_users: data.user_id
+            },
+
+            // increment total_interactions
+            $inc: {
+                total_interactions: 1
             }
         })
         return {
@@ -26,6 +31,11 @@ const unlikeContentDbHandler = async (data) => {
             // remove data.user from liked_users
             $pull: {
                 liked_users: data.user_id
+            },
+
+            // decrement total_interactions
+            $inc: {
+                total_interactions: -1
             }
         });
         return {
@@ -44,6 +54,11 @@ const readContentDbHandler = async (data) => {
             // add data.user to read_users
             $addToSet: {
                 read_users: data.user_id
+            },
+
+            // increment total_interactions
+            $inc: {
+                total_interactions: 1
             }
         });
         return {
@@ -60,8 +75,27 @@ const createInteractionDbHandler = async (data) => {
             content: data._id,
             liked_users: [],
             read_users: [],
-            inc_id: data.inc_id
+            inc_id: data.inc_id,
+            total_interactions: 0
         })
+    } catch (error) {
+        return { error: error };
+    }
+}
+
+const getTopContentsDbHandler = async (data) => {
+    try {
+        const topContents = await Interaction.find({}, {
+            inc_id: 1,
+            content: 1,
+            total_interactions: 1
+        }).sort({
+            total_interactions: -1
+        }).limit(data.total ? data.total : 10);
+        return {
+            top_contents: topContents,
+            total: topContents.length
+        }
     } catch (error) {
         return { error: error };
     }
@@ -71,5 +105,6 @@ module.exports = {
     likeContentDbHandler,
     unlikeContentDbHandler,
     readContentDbHandler,
-    createInteractionDbHandler
+    createInteractionDbHandler,
+    getTopContentsDbHandler
 }
