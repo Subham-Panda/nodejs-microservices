@@ -14,7 +14,7 @@ const connectRabbitMQ = async () => {
     }
 };
 
-const consumeFromQueue = async (queue, queueOptions, consumeOptions, consumerService) => {
+const consumeFromQueueAndReply = async (queue, queueOptions, consumeOptions, consumerService) => {
     try {
 
         const connection = await connectRabbitMQ();
@@ -72,10 +72,11 @@ const initializeQueues = async () => {
         const connection = await connectRabbitMQ();
         const channel = await connection.createChannel();
 
-        await consumeFromQueue(Queues.USER_CREATE, { durable: true }, { noAck: false }, userService.createUser);
-        await consumeFromQueue(Queues.USER_READ, { durable: true }, { noAck: false }, userService.getUser);
-        await consumeFromQueue(Queues.USER_UPDATE, { durable: true }, { noAck: false }, userService.updateUser);
-        await consumeFromQueue(Queues.USER_DELETE, { durable: true }, { noAck: false }, userService.deleteUser);
+        await consumeFromQueueAndReply(Queues.USER_CREATE, { durable: true }, { noAck: false }, userService.createUser);
+        await consumeFromQueueAndReply(Queues.USER_READ, { durable: true }, { noAck: false }, userService.getUser);
+        await consumeFromQueueAndReply(Queues.USER_UPDATE, { durable: true }, { noAck: false }, userService.updateUser);
+        await consumeFromQueueAndReply(Queues.USER_DELETE, { durable: true }, { noAck: false }, userService.deleteUser);
+        await consumeFromQueueAndReply(Queues.USER_VERIFY, { durable: true }, { noAck: false }, userService.verifyUser);
 
         channel.prefetch(1);
 
@@ -89,7 +90,7 @@ const initializeQueues = async () => {
 
 module.exports = {
     connectRabbitMQ,
-    consumeFromQueue,
+    consumeFromQueueAndReply,
     sendToQueue,
     initializeQueues
 }

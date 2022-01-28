@@ -1,6 +1,10 @@
 const mongoose = require('mongoose');
+const AutoIncrement = require('mongoose-sequence')(mongoose);
 
 const contentSchema = new mongoose.Schema({
+    inc_id: {
+        type: Number,
+    },
     title: {
         type: String,
         required: true,
@@ -15,6 +19,8 @@ const contentSchema = new mongoose.Schema({
 }, {
     timestamps: true,
 });
+
+contentSchema.plugin(AutoIncrement, {inc_field: 'inc_id'});
 
 const Content = mongoose.model('Content', contentSchema);
 

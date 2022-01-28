@@ -1,8 +1,10 @@
 const amqp = require('amqplib');
+const { v4: uuidv4 } = require('uuid');
+
 const config = require('../config');
 const logger = require('../logger/logger');
 const Queues = require('../enum/queues');
-const contentService = require('../service/content.service');
+const interactionService = require('../service/interaction.service');
 
 const connectRabbitMQ = async () => {
     try {
@@ -14,7 +16,7 @@ const connectRabbitMQ = async () => {
     }
 };
 
-const consumeFromQueue = async (queue, queueOptions, consumeOptions, consumerService) => {
+const consumeFromQueueAndReply= async (queue, queueOptions, consumeOptions, consumerService) => {
     try {
 
         const connection = await connectRabbitMQ();
@@ -22,15 +24,32 @@ const consumeFromQueue = async (queue, queueOptions, consumeOptions, consumerSer
         await channel.assertQueue(queue, queueOptions);
         channel.prefetch(1);
 
-        await channel.consume(queue, async (consumeMessage) => {
-            
+        channel.consume(queue, async (consumeMessage) => {
+
             if (consumeMessage && consumeMessage.content && consumeMessage.content.length > 0) {
 
                 try {
-                    const response = await consumerService(JSON.parse(consumeMessage.content.toString()));
-                    channel.sendToQueue(consumeMessage.properties.replyTo, Buffer.from(JSON.stringify(response)), { correlationId: consumeMessage.properties.correlationId });
+
+                    // verify user
+                    channel.assertQueue(Queues.USER_VERIFY, queueOptions);
+                    const assertQueue = await channel.assertQueue('', { exclusive: true });
+                    const correlationId = uuidv4();
+                    await channel.sendToQueue(Queues.USER_VERIFY, Buffer.from(consumeMessage.content.toString()), { replyTo: assertQueue.queue, correlationId });
+
+                    channel.consume(assertQueue.queue, async (verifyMessage) => {
+                        if (verifyMessage && verifyMessage.properties.correlationId === correlationId) {
+                            const responseMessageContent = JSON.parse(verifyMessage.content.toString());
+                            if (responseMessageContent.exists) {
+                                const response = await consumerService(JSON.parse(consumeMessage.content.toString()));
+                                channel.sendToQueue(consumeMessage.properties.replyTo, Buffer.from(JSON.stringify(response)), { correlationId: consumeMessage.properties.correlationId });
+                            } else {
+                                channel.sendToQueue(consumeMessage.properties.replyTo, Buffer.from(JSON.stringify({ message: "User doesnt exist"})), { correlationId: consumeMessage.properties.correlationId });
+                            }
+                        }
+                        channel.ack(verifyMessage);
+                    }, {})
                 } catch (error) {
-                    channel.sendToQueue(consumeMessage.properties.replyTo, Buffer.from(JSON.stringify({error})), { correlationId: consumeMessage.properties.correlationId });
+                    channel.sendToQueue(consumeMessage.properties.replyTo, Buffer.from(JSON.stringify({ error })), { correlationId: consumeMessage.properties.correlationId });
                 }
 
                 channel.ack(consumeMessage);
@@ -43,10 +62,29 @@ const consumeFromQueue = async (queue, queueOptions, consumeOptions, consumerSer
 
             }
         }, consumeOptions)
-        
+
     } catch (error) {
         logger.error(`[AMQP] consume error: ${error}`);
     }
+}
+
+const consumeFromQueue = async (queue, queueOptions, consumeOptions, consumerService) => {
+    const connection = await connectRabbitMQ();
+    const channel = await connection.createChannel();
+    await channel.assertQueue(queue, queueOptions);
+    channel.prefetch(1);
+
+    channel.consume(queue, async (consumeMessage) => {
+        if (consumeMessage && consumeMessage.content && consumeMessage.content.length > 0) {
+
+            try {
+                await consumerService(JSON.parse(consumeMessage.content.toString()));
+            }
+            catch (error) {
+                logger.error(`[AMQP] consume error: ${error}`);
+            }
+        }
+    }, consumeOptions)
 }
 
 const sendToQueue = async (queue, queueOptions, publishOptions, message) => {
@@ -72,12 +110,10 @@ const initializeQueues = async () => {
         const connection = await connectRabbitMQ();
         const channel = await connection.createChannel();
 
-        await consumeFromQueue(Queues.CONTENT_CREATE, { durable: true }, { noAck: false }, contentService.createContent);
-        await consumeFromQueue(Queues.CONTENT_READ, { durable: true }, { noAck: false }, contentService.getContent);
-        await consumeFromQueue(Queues.CONTENT_UPDATE, { durable: true }, { noAck: false }, contentService.updateContent);
-        await consumeFromQueue(Queues.CONTENT_DELETE, { durable: true }, { noAck: false }, contentService.deleteContent);
-        await consumeFromQueue(Queues.CONTENT_NEW, { durable: true }, { noAck: false }, contentService.getNewContent);
-
+        await consumeFromQueueAndReply(Queues.INTERACTION_READ, { durable: true }, { noAck: false }, interactionService.readContent);
+        await consumeFromQueueAndReply(Queues.INTERACTION_LIKE, { durable: true }, { noAck: false }, interactionService.likeContent);
+        await consumeFromQueueAndReply(Queues.INTERACTION_UNLIKE, { durable: true }, { noAck: false }, interactionService.unlikeContent);
+        await consumeFromQueue(Queues.INTERACTION_CREATE, { durable: true }, { noAck: true }, interactionService.createInteraction);
 
         channel.prefetch(1);
 
@@ -91,7 +127,7 @@ const initializeQueues = async () => {
 
 module.exports = {
     connectRabbitMQ,
-    consumeFromQueue,
+    consumeFromQueueAndReply,
     sendToQueue,
     initializeQueues
 }

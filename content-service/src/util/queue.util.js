@@ -14,7 +14,7 @@ const connectRabbitMQ = async () => {
     }
 };
 
-const consumeFromQueue = async (queue, queueOptions, consumeOptions, consumerService) => {
+const consumeFromQueueAndReply = async (queue, queueOptions, consumeOptions, consumerService) => {
     try {
 
         const connection = await connectRabbitMQ();
@@ -23,14 +23,19 @@ const consumeFromQueue = async (queue, queueOptions, consumeOptions, consumerSer
         channel.prefetch(1);
 
         await channel.consume(queue, async (consumeMessage) => {
-            
+
             if (consumeMessage && consumeMessage.content && consumeMessage.content.length > 0) {
 
                 try {
                     const response = await consumerService(JSON.parse(consumeMessage.content.toString()));
+
+                    if(queue === Queues.CONTENT_CREATE) {
+                        channel.sendToQueue(Queues.INTERACTION_CREATE, Buffer.from(JSON.stringify({content_id: response._id})));
+                    }
+
                     channel.sendToQueue(consumeMessage.properties.replyTo, Buffer.from(JSON.stringify(response)), { correlationId: consumeMessage.properties.correlationId });
                 } catch (error) {
-                    channel.sendToQueue(consumeMessage.properties.replyTo, Buffer.from(JSON.stringify({error})), { correlationId: consumeMessage.properties.correlationId });
+                    channel.sendToQueue(consumeMessage.properties.replyTo, Buffer.from(JSON.stringify({ error })), { correlationId: consumeMessage.properties.correlationId });
                 }
 
                 channel.ack(consumeMessage);
@@ -43,7 +48,7 @@ const consumeFromQueue = async (queue, queueOptions, consumeOptions, consumerSer
 
             }
         }, consumeOptions)
-        
+
     } catch (error) {
         logger.error(`[AMQP] consume error: ${error}`);
     }
@@ -72,11 +77,11 @@ const initializeQueues = async () => {
         const connection = await connectRabbitMQ();
         const channel = await connection.createChannel();
 
-        await consumeFromQueue(Queues.CONTENT_CREATE, { durable: true }, { noAck: false }, contentService.createContent);
-        await consumeFromQueue(Queues.CONTENT_READ, { durable: true }, { noAck: false }, contentService.getContent);
-        await consumeFromQueue(Queues.CONTENT_UPDATE, { durable: true }, { noAck: false }, contentService.updateContent);
-        await consumeFromQueue(Queues.CONTENT_DELETE, { durable: true }, { noAck: false }, contentService.deleteContent);
-        await consumeFromQueue(Queues.CONTENT_NEW, { durable: true }, { noAck: false }, contentService.getNewContent);
+        await consumeFromQueueAndReply(Queues.CONTENT_CREATE, { durable: true }, { noAck: false }, contentService.createContent);
+        await consumeFromQueueAndReply(Queues.CONTENT_READ, { durable: true }, { noAck: false }, contentService.getContent);
+        await consumeFromQueueAndReply(Queues.CONTENT_UPDATE, { durable: true }, { noAck: false }, contentService.updateContent);
+        await consumeFromQueueAndReply(Queues.CONTENT_DELETE, { durable: true }, { noAck: false }, contentService.deleteContent);
+        await consumeFromQueueAndReply(Queues.CONTENT_NEW, { durable: true }, { noAck: false }, contentService.getNewContent);
 
 
         channel.prefetch(1);
@@ -91,7 +96,7 @@ const initializeQueues = async () => {
 
 module.exports = {
     connectRabbitMQ,
-    consumeFromQueue,
+    consumeFromQueueAndReply,
     sendToQueue,
     initializeQueues
 }

@@ -5,7 +5,7 @@ const QueueUtil = require('../util/queue.util');
 exports.getContent = catchAsync(async (req, res, next) => {
     const { filter } = req.body;
 
-    await QueueUtil.sendMessageToQueue(
+    await QueueUtil.sendMessageToQueueAndWait(
         res, Queues.CONTENT_READ, {}, {}, { filter },
     );
 
@@ -14,7 +14,7 @@ exports.getContent = catchAsync(async (req, res, next) => {
 exports.createContent = catchAsync(async (req, res, next) => {
     const { title, story } = req.body;
 
-    await QueueUtil.sendMessageToQueue(
+    await QueueUtil.sendMessageToQueueAndWait(
         res, Queues.CONTENT_CREATE, {}, {}, { title, story },
     );
 
@@ -23,7 +23,7 @@ exports.createContent = catchAsync(async (req, res, next) => {
 exports.updateContent = catchAsync(async (req, res, next) => {
     const { filter, update } = req.body;
 
-    await QueueUtil.sendMessageToQueue(
+    await QueueUtil.sendMessageToQueueAndWait(
         res, Queues.CONTENT_UPDATE, {}, {}, { filter, update },
     );
 
@@ -32,7 +32,7 @@ exports.updateContent = catchAsync(async (req, res, next) => {
 exports.deleteContent = catchAsync(async (req, res, next) => {
     const { filter } = req.body;
 
-    await QueueUtil.sendMessageToQueue(
+    await QueueUtil.sendMessageToQueueAndWait(
         res, Queues.CONTENT_DELETE, {}, {}, { filter },
     );
 
@@ -41,7 +41,7 @@ exports.deleteContent = catchAsync(async (req, res, next) => {
 exports.getNewContent = catchAsync(async (req, res, next) => {
     const { total } = req.body
 
-    await QueueUtil.sendMessageToQueue(
+    await QueueUtil.sendMessageToQueueAndWait(
         res, Queues.CONTENT_NEW, {}, {}, { total }
     );
 
@@ -50,7 +50,7 @@ exports.getNewContent = catchAsync(async (req, res, next) => {
 exports.getTopContent = catchAsync(async (req, res, next) => {
     const { total } = req.body
 
-    await QueueUtil.sendMessageToQueue(
+    await QueueUtil.sendMessageToQueueAndWait(
         res, Queues.CONTENT_TOP, {}, {}, { total }
     )
 })

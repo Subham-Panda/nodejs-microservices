@@ -16,7 +16,7 @@ const connectRabbitMQ = async () => {
     }
 };
 
-const sendMessageToQueue = async (res, queueName, queueOptions, consumeOptions, message) => {
+const sendMessageToQueueAndWait = async (res, queueName, queueOptions, consumeOptions, message) => {
     const connection = await connectRabbitMQ();
     if (connection) {
         const channel = await connection.createChannel();
@@ -37,5 +37,5 @@ const sendMessageToQueue = async (res, queueName, queueOptions, consumeOptions, 
 
 module.exports = {
     connectRabbitMQ,
-    sendMessageToQueue,
+    sendMessageToQueueAndWait,
 };

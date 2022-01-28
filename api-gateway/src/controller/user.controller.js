@@ -5,7 +5,7 @@ const QueueUtil = require('../util/queue.util');
 exports.getUser = catchAsync(async (req, res, next) => {
     const { filter } = req.body;
 
-    await QueueUtil.sendMessageToQueue(
+    await QueueUtil.sendMessageToQueueAndWait(
         res, Queues.USER_READ, {}, {}, { filter },
     );
 
@@ -14,7 +14,7 @@ exports.getUser = catchAsync(async (req, res, next) => {
 exports.createUser = catchAsync(async (req, res, next) => {
     const { first_name, last_name, email, phone } = req.body;
 
-    await QueueUtil.sendMessageToQueue(
+    await QueueUtil.sendMessageToQueueAndWait(
         res, Queues.USER_CREATE, {}, {}, { first_name, last_name, email, phone },
     );
 
@@ -23,7 +23,7 @@ exports.createUser = catchAsync(async (req, res, next) => {
 exports.updateUser = catchAsync(async (req, res, next) => {
     const { filter, update } = req.body;
 
-    await QueueUtil.sendMessageToQueue(
+    await QueueUtil.sendMessageToQueueAndWait(
         res, Queues.USER_UPDATE, {}, {}, { filter, update },
     );
 
@@ -32,7 +32,7 @@ exports.updateUser = catchAsync(async (req, res, next) => {
 exports.deleteUser = catchAsync(async (req, res, next) => {
     const { filter } = req.body;
  
-    QueueUtil.sendMessageToQueue(
+    await QueueUtil.sendMessageToQueueAndWait(
         res, Queues.USER_DELETE, {}, {}, { filter },
     );
 });

@@ -1,6 +1,6 @@
 const Joi = require('joi');
-const { createUserServiceSchema, getUserServiceSchema, updateUserServiceSchema, deleteUserServiceSchema } = require('../validation');
-const { createUserDbHandler, getUserDbHandler, updateUserDbHandler, deleteUserDbHandler } = require('../db/handler/user.db.handler');
+const { createUserServiceSchema, getUserServiceSchema, updateUserServiceSchema, deleteUserServiceSchema, verifyUserServiceSchema } = require('../validation');
+const { createUserDbHandler, getUserDbHandler, updateUserDbHandler, deleteUserDbHandler, verifyUserDbHandler } = require('../db/handler/user.db.handler');
 const logger = require('../logger/logger');
 
 const createUser = async (data) => {
@@ -55,9 +55,26 @@ const deleteUser = async (data) => {
     return response;
 }
 
+const verifyUser = async (data) => {
+
+    const userData = {user_id: data.user_id}
+
+    const validationResponse = verifyUserServiceSchema.validate(userData)
+
+    if (validationResponse.error) {
+        logger.error(`[UserService] verifyUser validation error: ${validationResponse.error.details[0].message}`);
+        return { error: validationResponse.error.details[0].message };
+    }
+
+    const response = await verifyUserDbHandler(userData);
+
+    return response;
+}
+
 module.exports = {
     createUser,
     getUser,
     updateUser,
     deleteUser,
+    verifyUser
 }

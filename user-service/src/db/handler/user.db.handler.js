@@ -36,9 +36,19 @@ const deleteUserDbHandler = async (data) => {
     }  
 }
 
+const verifyUserDbHandler = async (data) => {
+    try {
+        const user = await User.findById(data.user_id);
+        return user ? { exists: true } : { exists: false };
+    } catch (error) {
+        return { error: error };
+    }  
+}
+
 module.exports = {
     createUserDbHandler,
     getUserDbHandler,
     updateUserDbHandler,
-    deleteUserDbHandler
+    deleteUserDbHandler,
+    verifyUserDbHandler
 }

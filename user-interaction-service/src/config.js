@@ -11,7 +11,6 @@ const config = {
     MONGO_URL: process.env.MONGO_URL || 'mongodb://localhost:27017/userInteractionService',
 };
 
-console.log(process.env.PORT)
 
 logger.info(`NODE_ENV: ${config.NODE_ENV}`);
 logger.info(`PORT: ${config.PORT}`);
