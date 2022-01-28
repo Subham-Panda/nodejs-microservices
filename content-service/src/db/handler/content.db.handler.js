@@ -50,29 +50,32 @@ const getNewContentDbHandler = async (data) => {
 const getTopContentDbHandler = async (data) => {
     try {
         const topContentIds = data.top_contents.map(content => content.content);
-        const topContents = await Content.aggregate([
-            {
-                $match: {
-                    _id: {
-                        $in: topContentIds
-                    }
-                }
-            },
-            { 
-                $addFields: { 
-                    "__order": { 
-                        $indexOfArray: [topContentIds, "_id"] 
-                    } 
-                }
-            },
-            { 
-                $sort: { 
-                    "__order": 1 
-                } 
+        
+        // map total interactions to top content ids in top content documents
+        const topContents = await Content.find({
+            _id: {
+                $in: topContentIds
             }
-        ]);
+        });
 
-        return topContents;
+
+        // add total interactions to top content documents
+        const topContentsWithTotalInteractions = topContents.map(topContent => {
+            const totalInteractions = data.top_contents.find(content => content.content === topContent._id.toString()).total_interactions;
+            return {
+                ...topContent.toObject(),
+                total_interactions: totalInteractions
+            }
+        });
+
+
+        //sort by total interactions
+        const topContentsSorted = topContentsWithTotalInteractions.sort((a, b) => {
+            return b.total_interactions - a.total_interactions;
+        });
+
+
+        return topContentsSorted;
     } catch (error) {
         return { error: error };
     }
@@ -83,5 +86,6 @@ module.exports = {
     getContentDbHandler,
     updateContentDbHandler,
     deleteContentDbHandler,
-    getNewContentDbHandler
+    getNewContentDbHandler,
+    getTopContentDbHandler
 }

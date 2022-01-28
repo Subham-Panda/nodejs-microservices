@@ -78,6 +78,7 @@ const getTopContent = async (data) => {
 
     const response = await getTopContentDbHandler(data);
 
+
     return response;
 }
 

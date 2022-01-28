@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-const AutoIncrement = require('mongoose-sequence')(mongoose);
 
 const interactionSchema = new mongoose.Schema({
     inc_id:{
@@ -26,8 +25,6 @@ const interactionSchema = new mongoose.Schema({
 }, {
     timestamps: true,
 });
-
-interactionSchema.plugin(AutoIncrement, {inc_field: 'inc_id'});
 
 const Interaction = mongoose.model('Interaction', interactionSchema);
 

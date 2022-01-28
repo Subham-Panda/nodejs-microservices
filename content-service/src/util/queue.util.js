@@ -41,7 +41,6 @@ const consumeFromQueueAndReply = async (queue, queueOptions, consumeOptions, con
                             if (topContentsResponse && topContentsResponse.properties.correlationId === correlationId) {
 
                                 const response = await consumerService(JSON.parse(topContentsResponse.content.toString()));
-                                console.log("RESPONSE: ", response);
                                 channel.sendToQueue(consumeMessage.properties.replyTo, Buffer.from(JSON.stringify(response)), { correlationId: consumeMessage.properties.correlationId });
                             }
                             channel.ack(topContentsResponse);

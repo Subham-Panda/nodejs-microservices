@@ -45,14 +45,19 @@ const readContent = async (data) => {
 }
 
 const createInteraction = async (data) => {
-    const validationResponse = createInteractionServiceSchema.validate(data)
+    const createInteractionData = {
+        content_id: data.content._id,
+        inc_id: data.content.inc_id
+    }
+
+    const validationResponse = createInteractionServiceSchema.validate(createInteractionData)
 
     if (validationResponse.error) {
         logger.error(`[InteractionService] createInteraction validation error: ${validationResponse.error.details[0].message}`);
         return { error: validationResponse.error.details[0].message };
     }
 
-    await createInteractionDbHandler(data);
+    await createInteractionDbHandler(createInteractionData);
 }
 
 const getTopContents= async (data) => {

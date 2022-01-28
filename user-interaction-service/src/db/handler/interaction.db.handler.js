@@ -72,7 +72,7 @@ const readContentDbHandler = async (data) => {
 const createInteractionDbHandler = async (data) => {
     try {
         await Interaction.create({
-            content: data._id,
+            content: data.content_id,
             liked_users: [],
             read_users: [],
             inc_id: data.inc_id,
@@ -90,8 +90,9 @@ const getTopContentsDbHandler = async (data) => {
             content: 1,
             total_interactions: 1
         }).sort({
-            total_interactions: -1
-        }).limit(data.total ? data.total : 10);
+            total_interactions: -1,
+            inc_id: -1
+        }).select("content total_interactions -inc_id").limit(data.total ? data.total : 10);
         return {
             top_contents: topContents,
             total: topContents.length
