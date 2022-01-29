@@ -1,0 +1,83 @@
+version: '3'
+
+services:
+
+  #MONGO DB
+  mongo_db:
+    image: mongo
+    container_name: pratilipi-mongo
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_db:/data/db
+    restart: always
+
+  # RABBIT MQ
+  rabbitmq:
+    image: rabbitmq:3.6.6-management
+    container_name: pratilipi-rabbitmq
+    restart: always
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+  
+  # USER SERVICE
+  pratilipi-user-service:
+    build: ./user-service
+    container_name: pratilipi-user-service
+    restart: always
+    environment:
+      - NODE_ENV=development
+      - PORT=4000
+      - RABBITMQ_URL=amqp://127.0.0.1:5672
+      - MONGO_URL=mongodb://mongo_db:27017/userService
+    depends_on:
+      - rabbitmq
+
+  # CONTENT SERVICE
+  pratilipi-content-service:
+    build: ./content-service
+    container_name: pratilipi-content-service
+    restart: always
+    environment:
+      - NODE_ENV=development
+      - PORT=5000
+      - RABBITMQ_URL=amqp://127.0.0.1:5672
+      - MONGO_URL=mongodb://mongo_db:27017/contentService
+    depends_on:
+      - rabbitmq
+
+  # USER INTERACTION SERVICE
+  pratilipi-user-interaction-service:
+    build: ./user-interaction-service
+    container_name: pratilipi-user-interaction-service
+    restart: always
+    environment:
+      - NODE_ENV=development
+      - PORT=6000
+      - RABBITMQ_URL=amqp://127.0.0.1:5672
+      - MONGO_URL=mongodb://mongo_db:27017/userInteractionService
+    depends_on:
+      - pratilipi-user-service
+      - pratilipi-content-service
+      - rabbitmq
+
+  # API GATEWAY
+  pratilipi-api-gateway:
+    build: ./api-gateway
+    container_name: pratilipi-api-gateway
+    restart: always
+    environment:
+      - NODE_ENV=development
+      - PORT=3000
+      - RABBITMQ_URL=amqp://127.0.0.1:5672
+    ports:
+      - 3000:3000
+    depends_on:
+      - pratilipi-user-service
+      - pratilipi-content-service
+      - pratilipi-user-interaction-service
+      - rabbitmq
+
+volumes:
+  mongo_db: {}
