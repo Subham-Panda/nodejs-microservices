@@ -20,6 +20,8 @@ services:
     ports:
       - "5672:5672"
       - "15672:15672"
+    networks:
+      - rabbitmq_nodejs
   
   # USER SERVICE
   pratilipi-user-service:
@@ -29,10 +31,12 @@ services:
     environment:
       - NODE_ENV=development
       - PORT=4000
-      - RABBITMQ_URL=amqp://127.0.0.1:5672
+      - RABBITMQ_URL=amqp://guest:guest@rabbitmq:5672
       - MONGO_URL=mongodb://mongo_db:27017/userService
     depends_on:
       - rabbitmq
+    networks:
+      - rabbitmq_nodejs
 
   # CONTENT SERVICE
   pratilipi-content-service:
@@ -42,10 +46,12 @@ services:
     environment:
       - NODE_ENV=development
       - PORT=5000
-      - RABBITMQ_URL=amqp://127.0.0.1:5672
+      - RABBITMQ_URL=amqp://guest:guest@rabbitmq:5672
       - MONGO_URL=mongodb://mongo_db:27017/contentService
     depends_on:
       - rabbitmq
+    networks:
+      - rabbitmq_nodejs
 
   # USER INTERACTION SERVICE
   pratilipi-user-interaction-service:
@@ -55,12 +61,14 @@ services:
     environment:
       - NODE_ENV=development
       - PORT=6000
-      - RABBITMQ_URL=amqp://127.0.0.1:5672
+      - RABBITMQ_URL=amqp://guest:guest@rabbitmq:5672
       - MONGO_URL=mongodb://mongo_db:27017/userInteractionService
     depends_on:
       - pratilipi-user-service
       - pratilipi-content-service
       - rabbitmq
+    networks:
+      - rabbitmq_nodejs
 
   # API GATEWAY
   pratilipi-api-gateway:
@@ -70,7 +78,7 @@ services:
     environment:
       - NODE_ENV=development
       - PORT=3000
-      - RABBITMQ_URL=amqp://127.0.0.1:5672
+      - RABBITMQ_URL=amqp://guest:guest@rabbitmq:5672
     ports:
       - 3000:3000
     depends_on:
@@ -78,6 +86,12 @@ services:
       - pratilipi-content-service
       - pratilipi-user-interaction-service
       - rabbitmq
+    networks:
+      - rabbitmq_nodejs
 
 volumes:
   mongo_db: {}
+
+networks:
+  rabbitmq_nodejs:
+    driver: bridge
