@@ -18,11 +18,9 @@ const port = config.PORT;
 const server = app.listen(port, async () => {
     logger.info(`App running on port ${port}...`);
 
-    await connectDatabase();
-
-    await connectRabbitMQ();
-
     await initializeQueues();
+
+    await connectDatabase();
 
 });
 
