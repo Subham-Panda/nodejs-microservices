@@ -1,0 +1,2564 @@
+{
+	"info": {
+		"_postman_id": "d7a43127-7707-4edb-978e-33286dc3eca8",
+		"name": "Pratilipi-Microservices-Backend",
+		"description": "## Docs to help user interact with the API for Pratilipi backend microservices task",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Content Service",
+			"item": [
+				{
+					"name": "Create Content",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"title\": \"Title 5\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/content/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"content",
+								""
+							]
+						},
+						"description": "## Request to Create Content\n\n### Required Fields\n* title: String\n* story: String"
+					},
+					"response": [
+						{
+							"name": "Create Content 1",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"title\": \"Title 1\",\n    \"story\": \"Story 1\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:3000/api/content/",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"content",
+										""
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "195"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"c3-a+Q1YMpzij2ZIB55/cqmv5K+BeI\""
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 30 Jan 2022 08:24:40 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": \"success\",\n    \"data\": {\n        \"title\": \"Title 1\",\n        \"story\": \"Story 1\",\n        \"_id\": \"61f64b48166fb3d3a1107e0e\",\n        \"createdAt\": \"2022-01-30T08:24:40.464Z\",\n        \"updatedAt\": \"2022-01-30T08:24:40.464Z\",\n        \"inc_id\": 1,\n        \"__v\": 0\n    }\n}"
+						},
+						{
+							"name": "Create Content 2",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"title\": \"Title 5\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:3000/api/content/",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"content",
+										""
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "70"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"46-/N+M1/sUw4PNR5q2nE7YGA185rw\""
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 30 Jan 2022 08:25:42 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": \"error\",\n    \"service\": \"content\",\n    \"error\": \"\\\"story\\\" is required\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Get Content",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"filter\": {}\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/content/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"content",
+								""
+							]
+						},
+						"description": "## Request to Fetch Content details\n\n### Required Fields\n* filter: Object \n  filter object takes in the filters for Content documents to fetch\n\n  filter object can have either of the following set of fields\n  >* _id: String | Optional\n\n  OR\n\n  >* first_name: String | Optional\n  >* last_name: String | Optional\n  >* email: String | Optional\n  >* phone: Number | Optional\n\n  **NOTE: Empty filter object indicates to fetch all the Content documents**"
+					},
+					"response": [
+						{
+							"name": "Get Conent 1",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"filter\": {\n        \"title\": \"Title 3\"\n    }\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:3000/api/content/",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"content",
+										""
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "197"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"c5-jLjWXQ2NAe8XwvjqTubRY1xdRvE\""
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 30 Jan 2022 08:35:48 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": \"success\",\n    \"data\": [\n        {\n            \"_id\": \"61f64b68166fb3d3a1107e15\",\n            \"title\": \"Title 3\",\n            \"story\": \"Story 3\",\n            \"createdAt\": \"2022-01-30T08:25:12.791Z\",\n            \"updatedAt\": \"2022-01-30T08:25:12.791Z\",\n            \"inc_id\": 3,\n            \"__v\": 0\n        }\n    ]\n}"
+						},
+						{
+							"name": "Get Conent 2",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"filter\": {\n        \"_id\": \"61f64b68166fb3d3a1107e15\"\n    }\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:3000/api/content/",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"content",
+										""
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "197"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"c5-jLjWXQ2NAe8XwvjqTubRY1xdRvE\""
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 30 Jan 2022 08:36:27 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": \"success\",\n    \"data\": [\n        {\n            \"_id\": \"61f64b68166fb3d3a1107e15\",\n            \"title\": \"Title 3\",\n            \"story\": \"Story 3\",\n            \"createdAt\": \"2022-01-30T08:25:12.791Z\",\n            \"updatedAt\": \"2022-01-30T08:25:12.791Z\",\n            \"inc_id\": 3,\n            \"__v\": 0\n        }\n    ]\n}"
+						},
+						{
+							"name": "Get Conent 3",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"filter\": {}\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:3000/api/content/",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"content",
+										""
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "901"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"385-Oe/hH1IwiLnkIXcI+377fj90wRs\""
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 30 Jan 2022 08:36:46 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": \"success\",\n    \"data\": [\n        {\n            \"_id\": \"61f64b48166fb3d3a1107e0e\",\n            \"title\": \"Title 1 Updated\",\n            \"story\": \"Story 1 Updated\",\n            \"createdAt\": \"2022-01-30T08:24:40.464Z\",\n            \"updatedAt\": \"2022-01-30T08:33:38.561Z\",\n            \"inc_id\": 1,\n            \"__v\": 0\n        },\n        {\n            \"_id\": \"61f64b53166fb3d3a1107e11\",\n            \"title\": \"Title 2 Updated\",\n            \"story\": \"Story 2 Updated\",\n            \"createdAt\": \"2022-01-30T08:24:51.863Z\",\n            \"updatedAt\": \"2022-01-30T08:34:06.366Z\",\n            \"inc_id\": 2,\n            \"__v\": 0\n        },\n        {\n            \"_id\": \"61f64b68166fb3d3a1107e15\",\n            \"title\": \"Title 3\",\n            \"story\": \"Story 3\",\n            \"createdAt\": \"2022-01-30T08:25:12.791Z\",\n            \"updatedAt\": \"2022-01-30T08:25:12.791Z\",\n            \"inc_id\": 3,\n            \"__v\": 0\n        },\n        {\n            \"_id\": \"61f64b6e166fb3d3a1107e19\",\n            \"title\": \"Title 4\",\n            \"story\": \"Story 4\",\n            \"createdAt\": \"2022-01-30T08:25:18.257Z\",\n            \"updatedAt\": \"2022-01-30T08:25:18.257Z\",\n            \"inc_id\": 4,\n            \"__v\": 0\n        },\n        {\n            \"_id\": \"61f64b72166fb3d3a1107e1d\",\n            \"title\": \"Title 5\",\n            \"story\": \"Story 5\",\n            \"createdAt\": \"2022-01-30T08:25:22.319Z\",\n            \"updatedAt\": \"2022-01-30T08:25:22.319Z\",\n            \"inc_id\": 5,\n            \"__v\": 0\n        }\n    ]\n}"
+						}
+					]
+				},
+				{
+					"name": "Update Content",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"filter\": {\n        \"title\": \"Title 2\"\n    },\n    \"update\": {\n        \"title\": \"Title 2 Updated\",\n        \"story\": \"Story 2 Updated\"\n    }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/content/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"content",
+								""
+							]
+						},
+						"description": "## Request to Update Content\n\n### Required Fields\n* filter: Object \n  filter object takes in the filters for Content documents to update\n\n  filter object can have either of the following set of fields\n  >* _id: String | Optional\n\n  OR\n\n  >* title: String | Optional\n  >* story: String | Optional\n\n  **NOTE: Empty filter object indicates to update all the Content documents**\n\n* update: Object\n  update object takes in the updates to be made to the Content documents filtered\n\n  update object can have the following fields\n  >* title: String | Optional\n  >* story: String | Optional\n\n  **NOTE: Empty update object indicates to update nothing in the filtered Content documents**"
+					},
+					"response": [
+						{
+							"name": "Update Content",
+							"originalRequest": {
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"filter\": {\n        \"_id\": \"61f64b48166fb3d3a1107e0e\"\n    },\n    \"update\": {\n        \"story\": \"Story 1 Updated\"\n    }\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:3000/api/content/",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"content",
+										""
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "120"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"78-1fFO/dhM+0CwXTeUOW8GzkWDKfs\""
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 30 Jan 2022 08:33:02 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": \"success\",\n    \"data\": {\n        \"acknowledged\": true,\n        \"modifiedCount\": 1,\n        \"upsertedId\": null,\n        \"upsertedCount\": 0,\n        \"matchedCount\": 1\n    }\n}"
+						},
+						{
+							"name": "Update Content",
+							"originalRequest": {
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"filter\": {\n        \"_id\": \"61f64b48166fb3d3a1107e0e\"\n    },\n    \"update\": {\n        \"title\": \"Title 1 Updated\",\n        \"story\": \"Story 1 Updated\"\n    }\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:3000/api/content/",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"content",
+										""
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "120"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"78-1fFO/dhM+0CwXTeUOW8GzkWDKfs\""
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 30 Jan 2022 08:33:38 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": \"success\",\n    \"data\": {\n        \"acknowledged\": true,\n        \"modifiedCount\": 1,\n        \"upsertedId\": null,\n        \"upsertedCount\": 0,\n        \"matchedCount\": 1\n    }\n}"
+						},
+						{
+							"name": "Update Content",
+							"originalRequest": {
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"filter\": {\n        \"title\": \"Title 2\"\n    },\n    \"update\": {\n        \"title\": \"Title 2 Updated\",\n        \"story\": \"Story 2 Updated\"\n    }\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:3000/api/content/",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"content",
+										""
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "120"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"78-1fFO/dhM+0CwXTeUOW8GzkWDKfs\""
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 30 Jan 2022 08:34:06 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": \"success\",\n    \"data\": {\n        \"acknowledged\": true,\n        \"modifiedCount\": 1,\n        \"upsertedId\": null,\n        \"upsertedCount\": 0,\n        \"matchedCount\": 1\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "Delete Content",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"filter\": {\n        \"_id\": \"61f64b48166fb3d3a1107e0e\"\n    }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/content/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"content",
+								""
+							]
+						},
+						"description": "## Request to Delete Content\n\n### Required Fields\n* filter: Object \n  filter object takes in the filters for Content documents to delete\n\n  filter object can have either of the following set of fields\n  >* _id: String | Optional\n\n  OR\n\n  >* first_name: String | Optional\n  >* last_name: String | Optional\n  >* email: String | Optional\n  >* phone: Number | Optional\n\n  **NOTE: Empty filter object indicates to delete all the Content documents**"
+					},
+					"response": [
+						{
+							"name": "Delete Content",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"filter\": {\n        \"_id\": \"61f64b48166fb3d3a1107e0e\"\n    }\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:3000/api/content/",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"content",
+										""
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "46"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"2e-fnBHT9x14gpQhcBeu6hp3CP7oys\""
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 30 Jan 2022 09:31:08 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": \"success\",\n    \"data\": {\n        \"deletedCount\": 1\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "New Content",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/content/new",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"content",
+								"new"
+							]
+						},
+						"description": "## Request to Fetch New Content\n\n### Fields\n* total: Number | Optional\n\n**NOTE: If total is not provided by default a maximum of 10 documents are fetched provided 10 Content documents exist in the collection**"
+					},
+					"response": [
+						{
+							"name": "New Content 1",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"total\": 4\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:3000/api/content/new",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"content",
+										"new"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "717"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"2cd-QRNj7KWvNlC9QdY5ADgR2tpi+1s\""
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 30 Jan 2022 08:51:47 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": \"success\",\n    \"data\": [\n        {\n            \"_id\": \"61f64b72166fb3d3a1107e1d\",\n            \"title\": \"Title 5\",\n            \"story\": \"Story 5\",\n            \"createdAt\": \"2022-01-30T08:25:22.319Z\",\n            \"updatedAt\": \"2022-01-30T08:25:22.319Z\",\n            \"inc_id\": 5,\n            \"__v\": 0\n        },\n        {\n            \"_id\": \"61f64b6e166fb3d3a1107e19\",\n            \"title\": \"Title 4\",\n            \"story\": \"Story 4\",\n            \"createdAt\": \"2022-01-30T08:25:18.257Z\",\n            \"updatedAt\": \"2022-01-30T08:25:18.257Z\",\n            \"inc_id\": 4,\n            \"__v\": 0\n        },\n        {\n            \"_id\": \"61f64b68166fb3d3a1107e15\",\n            \"title\": \"Title 3\",\n            \"story\": \"Story 3\",\n            \"createdAt\": \"2022-01-30T08:25:12.791Z\",\n            \"updatedAt\": \"2022-01-30T08:25:12.791Z\",\n            \"inc_id\": 3,\n            \"__v\": 0\n        },\n        {\n            \"_id\": \"61f64b53166fb3d3a1107e11\",\n            \"title\": \"Title 2 Updated\",\n            \"story\": \"Story 2 Updated\",\n            \"createdAt\": \"2022-01-30T08:24:51.863Z\",\n            \"updatedAt\": \"2022-01-30T08:34:06.366Z\",\n            \"inc_id\": 2,\n            \"__v\": 0\n        }\n    ]\n}"
+						},
+						{
+							"name": "New Content 2",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:3000/api/content/new",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"content",
+										"new"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "901"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"385-uQVR3xOQNPS3vXOUajQMBfD3xwU\""
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 30 Jan 2022 09:10:26 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": \"success\",\n    \"data\": [\n        {\n            \"_id\": \"61f64b72166fb3d3a1107e1d\",\n            \"title\": \"Title 5\",\n            \"story\": \"Story 5\",\n            \"createdAt\": \"2022-01-30T08:25:22.319Z\",\n            \"updatedAt\": \"2022-01-30T08:25:22.319Z\",\n            \"inc_id\": 5,\n            \"__v\": 0\n        },\n        {\n            \"_id\": \"61f64b6e166fb3d3a1107e19\",\n            \"title\": \"Title 4\",\n            \"story\": \"Story 4\",\n            \"createdAt\": \"2022-01-30T08:25:18.257Z\",\n            \"updatedAt\": \"2022-01-30T08:25:18.257Z\",\n            \"inc_id\": 4,\n            \"__v\": 0\n        },\n        {\n            \"_id\": \"61f64b68166fb3d3a1107e15\",\n            \"title\": \"Title 3\",\n            \"story\": \"Story 3\",\n            \"createdAt\": \"2022-01-30T08:25:12.791Z\",\n            \"updatedAt\": \"2022-01-30T08:25:12.791Z\",\n            \"inc_id\": 3,\n            \"__v\": 0\n        },\n        {\n            \"_id\": \"61f64b53166fb3d3a1107e11\",\n            \"title\": \"Title 2 Updated\",\n            \"story\": \"Story 2 Updated\",\n            \"createdAt\": \"2022-01-30T08:24:51.863Z\",\n            \"updatedAt\": \"2022-01-30T08:34:06.366Z\",\n            \"inc_id\": 2,\n            \"__v\": 0\n        },\n        {\n            \"_id\": \"61f64b48166fb3d3a1107e0e\",\n            \"title\": \"Title 1 Updated\",\n            \"story\": \"Story 1 Updated\",\n            \"createdAt\": \"2022-01-30T08:24:40.464Z\",\n            \"updatedAt\": \"2022-01-30T08:33:38.561Z\",\n            \"inc_id\": 1,\n            \"__v\": 0\n        }\n    ]\n}"
+						}
+					]
+				},
+				{
+					"name": "Top Content",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/content/top",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"content",
+								"top"
+							]
+						},
+						"description": "## Request to Fetch Top Content\n\n### Fields\n* total: Number | Optional\n\n**NOTE: If total is not provided by default a maximum of 10 documents are fetched provided 10 Content documents exist in the collection**"
+					},
+					"response": [
+						{
+							"name": "Top Content 1",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"total\": 2\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:3000/api/content/top",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"content",
+										"top"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "443"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"1bb-BxyJzEazJvhrH/s9jyU33ALVMw0\""
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 30 Jan 2022 08:52:11 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": \"success\",\n    \"data\": [\n        {\n            \"_id\": \"61f64b53166fb3d3a1107e11\",\n            \"title\": \"Title 2 Updated\",\n            \"story\": \"Story 2 Updated\",\n            \"createdAt\": \"2022-01-30T08:24:51.863Z\",\n            \"updatedAt\": \"2022-01-30T08:34:06.366Z\",\n            \"inc_id\": 2,\n            \"__v\": 0,\n            \"total_interactions\": 5\n        },\n        {\n            \"_id\": \"61f64b48166fb3d3a1107e0e\",\n            \"title\": \"Title 1 Updated\",\n            \"story\": \"Story 1 Updated\",\n            \"createdAt\": \"2022-01-30T08:24:40.464Z\",\n            \"updatedAt\": \"2022-01-30T08:33:38.561Z\",\n            \"inc_id\": 1,\n            \"__v\": 0,\n            \"total_interactions\": 4\n        }\n    ]\n}"
+						},
+						{
+							"name": "Top Content 2",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:3000/api/content/top",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"content",
+										"top"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "1016"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"3f8-FBsLXdZOdLEg6YYXudm+KnkcP9o\""
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 30 Jan 2022 09:24:14 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": \"success\",\n    \"data\": [\n        {\n            \"_id\": \"61f64b53166fb3d3a1107e11\",\n            \"title\": \"Title 2 Updated\",\n            \"story\": \"Story 2 Updated\",\n            \"createdAt\": \"2022-01-30T08:24:51.863Z\",\n            \"updatedAt\": \"2022-01-30T08:34:06.366Z\",\n            \"inc_id\": 2,\n            \"__v\": 0,\n            \"total_interactions\": 5\n        },\n        {\n            \"_id\": \"61f64b48166fb3d3a1107e0e\",\n            \"title\": \"Title 1 Updated\",\n            \"story\": \"Story 1 Updated\",\n            \"createdAt\": \"2022-01-30T08:24:40.464Z\",\n            \"updatedAt\": \"2022-01-30T08:33:38.561Z\",\n            \"inc_id\": 1,\n            \"__v\": 0,\n            \"total_interactions\": 4\n        },\n        {\n            \"_id\": \"61f64b68166fb3d3a1107e15\",\n            \"title\": \"Title 3\",\n            \"story\": \"Story 3\",\n            \"createdAt\": \"2022-01-30T08:25:12.791Z\",\n            \"updatedAt\": \"2022-01-30T08:25:12.791Z\",\n            \"inc_id\": 3,\n            \"__v\": 0,\n            \"total_interactions\": 2\n        },\n        {\n            \"_id\": \"61f64b6e166fb3d3a1107e19\",\n            \"title\": \"Title 4\",\n            \"story\": \"Story 4\",\n            \"createdAt\": \"2022-01-30T08:25:18.257Z\",\n            \"updatedAt\": \"2022-01-30T08:25:18.257Z\",\n            \"inc_id\": 4,\n            \"__v\": 0,\n            \"total_interactions\": 0\n        },\n        {\n            \"_id\": \"61f64b72166fb3d3a1107e1d\",\n            \"title\": \"Title 5\",\n            \"story\": \"Story 5\",\n            \"createdAt\": \"2022-01-30T08:25:22.319Z\",\n            \"updatedAt\": \"2022-01-30T08:25:22.319Z\",\n            \"inc_id\": 5,\n            \"__v\": 0,\n            \"total_interactions\": 0\n        }\n    ]\n}"
+						}
+					]
+				}
+			],
+			"description": "###### API endpoints to help users interact with the Content Service"
+		},
+		{
+			"name": "User Service",
+			"item": [
+				{
+					"name": "Create User",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"first_name\": \"Subham\",\n    \"last_name\": \"Panda\",\n    \"email\": \"subham.panda@gmail.com\",\n    \"phone\": 9777615319\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/user/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"user",
+								""
+							]
+						},
+						"description": "## Request to Create User\n\n### Required Fields\n* first_name: String\n* last_name: String\n* email: String\n* phone: Number"
+					},
+					"response": [
+						{
+							"name": "Create User 1",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"first_name\": \"Subham\",\n    \"last_name\": \"Panda\",\n    \"email\": \"subham.panda@gmail.com\",\n    \"phone\": 9777615319\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:3000/api/user/",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"user",
+										""
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "244"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"f4-oSY8qdFiBRNCQg8dlo5Z7wnJszc\""
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 30 Jan 2022 07:47:39 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": \"success\",\n    \"data\": {\n        \"first_name\": \"Subham\",\n        \"last_name\": \"Panda\",\n        \"email\": \"subham.panda@gmail.com\",\n        \"phone\": \"9777615319\",\n        \"_id\": \"61f6429b62f6fc3764104d3d\",\n        \"createdAt\": \"2022-01-30T07:47:39.570Z\",\n        \"updatedAt\": \"2022-01-30T07:47:39.570Z\",\n        \"__v\": 0\n    }\n}"
+						},
+						{
+							"name": "Create User 2",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"first_name\": \"Subham\",\n    \"last_name\": \"Poddar\",\n    \"email\": \"subham.poddar@gmail.com\",\n    \"phone\": 9777458965\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:3000/api/user/",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"user",
+										""
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "246"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"f6-PcfUsPAnX94xe0Qkx+umuw34E7g\""
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 30 Jan 2022 07:48:20 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": \"success\",\n    \"data\": {\n        \"first_name\": \"Subham\",\n        \"last_name\": \"Poddar\",\n        \"email\": \"subham.poddar@gmail.com\",\n        \"phone\": \"9777458965\",\n        \"_id\": \"61f642c462f6fc3764104d3f\",\n        \"createdAt\": \"2022-01-30T07:48:20.348Z\",\n        \"updatedAt\": \"2022-01-30T07:48:20.348Z\",\n        \"__v\": 0\n    }\n}"
+						},
+						{
+							"name": "Create User 3",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"first_name\": \"Arnab\",\n    \"last_name\": \"Poddar\",\n    \"email\": \"arnab.poddar@gmail.com\",\n    \"phone\": 9777965236\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:3000/api/user/",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"user",
+										""
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "244"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"f4-3jiDmvHjCgZPR/afh7gGpiUxbt0\""
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 30 Jan 2022 07:48:55 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": \"success\",\n    \"data\": {\n        \"first_name\": \"Arnab\",\n        \"last_name\": \"Poddar\",\n        \"email\": \"arnab.poddar@gmail.com\",\n        \"phone\": \"9777965236\",\n        \"_id\": \"61f642e762f6fc3764104d41\",\n        \"createdAt\": \"2022-01-30T07:48:55.697Z\",\n        \"updatedAt\": \"2022-01-30T07:48:55.697Z\",\n        \"__v\": 0\n    }\n}"
+						},
+						{
+							"name": "Create User 4",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"first_name\": \"Aditya\",\n    \"last_name\": \"Mishra\",\n    \"email\": \"aditya.mishra@gmail.com\",\n    \"phone\": 9777852369\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:3000/api/user/",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"user",
+										""
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "246"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"f6-o/uJWHECEsErC0P9HL3/wLaaggc\""
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 30 Jan 2022 07:49:34 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": \"success\",\n    \"data\": {\n        \"first_name\": \"Aditya\",\n        \"last_name\": \"Mishra\",\n        \"email\": \"aditya.mishra@gmail.com\",\n        \"phone\": \"9777852369\",\n        \"_id\": \"61f6430e62f6fc3764104d43\",\n        \"createdAt\": \"2022-01-30T07:49:34.981Z\",\n        \"updatedAt\": \"2022-01-30T07:49:34.981Z\",\n        \"__v\": 0\n    }\n}"
+						},
+						{
+							"name": "Create User 5",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"first_name\": \"Saurav\",\n    \"last_name\": \"Mishra\",\n    \"phone\": 9777852369\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:3000/api/user/",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"user",
+										""
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "67"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"43-Mv7SLUTjyr/NdcSKJU1EMyb9uJs\""
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 30 Jan 2022 07:50:10 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": \"error\",\n    \"service\": \"user\",\n    \"error\": \"\\\"email\\\" is required\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Update User",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/user/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"user",
+								""
+							]
+						},
+						"description": "## Request to Update User\n\n### Required Fields\n* filter: Object \n  filter object takes in the filters for User documents to update\n\n  filter object can have either of the following set of fields\n  >* _id: String | Optional\n\n  OR\n\n  >* first_name: String | Optional\n  >* last_name: String | Optional\n  >* email: String | Optional\n  >* phone: Number | Optional\n\n  **NOTE: Empty filter object indicates to update all the User documents**\n\n* update: Object\n  update object takes in the updates to be made to the User documents filtered\n\n  update object can have the following fields\n  >* first_name: String | Optional\n  >* last_name: String | Optional\n  >* email: String | Optional\n  >* phone: Number | Optional\n\n  **NOTE: Empty update object indicates to update nothing in the filtered User documents**"
+					},
+					"response": [
+						{
+							"name": "Update User 1",
+							"originalRequest": {
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"filter\": {\n        \"_id\": \"61f642c462f6fc3764104d3f\"\n    },\n    \"update\": {\n        \"last_name\": \"Singh\"\n    }\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:3000/api/user/",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"user",
+										""
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "120"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"78-1fFO/dhM+0CwXTeUOW8GzkWDKfs\""
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 30 Jan 2022 07:57:16 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": \"success\",\n    \"data\": {\n        \"acknowledged\": true,\n        \"modifiedCount\": 1,\n        \"upsertedId\": null,\n        \"upsertedCount\": 0,\n        \"matchedCount\": 1\n    }\n}"
+						},
+						{
+							"name": "Update User 2",
+							"originalRequest": {
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"filter\": {\n        \"first_name\": \"Arnab\"\n    },\n    \"update\": {\n        \"last_name\": \"Sharma\"\n    }\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:3000/api/user/",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"user",
+										""
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "120"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"78-1fFO/dhM+0CwXTeUOW8GzkWDKfs\""
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 30 Jan 2022 07:58:06 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": \"success\",\n    \"data\": {\n        \"acknowledged\": true,\n        \"modifiedCount\": 1,\n        \"upsertedId\": null,\n        \"upsertedCount\": 0,\n        \"matchedCount\": 1\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "Get User",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"filter\" : {}\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/user/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"user",
+								""
+							]
+						},
+						"description": "## Request to Fetch User details\n\n### Required Fields\n* filter: Object \n  filter object takes in the filters for User documents to update\n\n  filter object can have either of the following set of fields\n  >* _id: String | Optional\n\n  OR\n\n  >* first_name: String | Optional\n  >* last_name: String | Optional\n  >* email: String | Optional\n  >* phone: Number | Optional\n\n  **NOTE: Empty filter object indicates to fetch all the User documents**"
+					},
+					"response": [
+						{
+							"name": "Get User 1",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"filter\" : {\n        \"_id\": \"61f6429b62f6fc3764104d3d\"\n    }\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:3000/api/user/",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"user",
+										""
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "246"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"f6-W7c61p7CNWdJBTOSv6kH8V0bw6I\""
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 30 Jan 2022 08:20:52 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": \"success\",\n    \"data\": [\n        {\n            \"_id\": \"61f6429b62f6fc3764104d3d\",\n            \"first_name\": \"Subham\",\n            \"last_name\": \"Panda\",\n            \"email\": \"subham.panda@gmail.com\",\n            \"phone\": \"9777615319\",\n            \"createdAt\": \"2022-01-30T07:47:39.570Z\",\n            \"updatedAt\": \"2022-01-30T07:47:39.570Z\",\n            \"__v\": 0\n        }\n    ]\n}"
+						},
+						{
+							"name": "Get User 2",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"filter\" : {\n        \"first_name\": \"Subham\"\n    }\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:3000/api/user/",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"user",
+										""
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "464"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"1d0-edLokAgkC8MRyjV1WTWvMfAW/34\""
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 30 Jan 2022 08:21:12 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": \"success\",\n    \"data\": [\n        {\n            \"_id\": \"61f6429b62f6fc3764104d3d\",\n            \"first_name\": \"Subham\",\n            \"last_name\": \"Panda\",\n            \"email\": \"subham.panda@gmail.com\",\n            \"phone\": \"9777615319\",\n            \"createdAt\": \"2022-01-30T07:47:39.570Z\",\n            \"updatedAt\": \"2022-01-30T07:47:39.570Z\",\n            \"__v\": 0\n        },\n        {\n            \"_id\": \"61f642c462f6fc3764104d3f\",\n            \"first_name\": \"Subham\",\n            \"last_name\": \"Singh\",\n            \"email\": \"subham.poddar@gmail.com\",\n            \"phone\": \"9777458965\",\n            \"createdAt\": \"2022-01-30T07:48:20.348Z\",\n            \"updatedAt\": \"2022-01-30T07:57:16.845Z\",\n            \"__v\": 0\n        }\n    ]\n}"
+						},
+						{
+							"name": "Get User 3",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"filter\" : {\n        \"first_name\": \"Subham\",\n        \"last_name\": \"Panda\"\n    }\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:3000/api/user/",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"user",
+										""
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "246"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"f6-W7c61p7CNWdJBTOSv6kH8V0bw6I\""
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 30 Jan 2022 08:21:35 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": \"success\",\n    \"data\": [\n        {\n            \"_id\": \"61f6429b62f6fc3764104d3d\",\n            \"first_name\": \"Subham\",\n            \"last_name\": \"Panda\",\n            \"email\": \"subham.panda@gmail.com\",\n            \"phone\": \"9777615319\",\n            \"createdAt\": \"2022-01-30T07:47:39.570Z\",\n            \"updatedAt\": \"2022-01-30T07:47:39.570Z\",\n            \"__v\": 0\n        }\n    ]\n}"
+						},
+						{
+							"name": "Get User 4",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"filter\" : {}\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:3000/api/user/",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"user",
+										""
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "900"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"384-uqookdwCtJX6fjB0CRqnNzzZRBo\""
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 30 Jan 2022 08:22:59 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": \"success\",\n    \"data\": [\n        {\n            \"_id\": \"61f6429b62f6fc3764104d3d\",\n            \"first_name\": \"Subham\",\n            \"last_name\": \"Panda\",\n            \"email\": \"subham.panda@gmail.com\",\n            \"phone\": \"9777615319\",\n            \"createdAt\": \"2022-01-30T07:47:39.570Z\",\n            \"updatedAt\": \"2022-01-30T07:47:39.570Z\",\n            \"__v\": 0\n        },\n        {\n            \"_id\": \"61f642c462f6fc3764104d3f\",\n            \"first_name\": \"Subham\",\n            \"last_name\": \"Singh\",\n            \"email\": \"subham.poddar@gmail.com\",\n            \"phone\": \"9777458965\",\n            \"createdAt\": \"2022-01-30T07:48:20.348Z\",\n            \"updatedAt\": \"2022-01-30T07:57:16.845Z\",\n            \"__v\": 0\n        },\n        {\n            \"_id\": \"61f642e762f6fc3764104d41\",\n            \"first_name\": \"Arnab\",\n            \"last_name\": \"Sharma\",\n            \"email\": \"arnab.poddar@gmail.com\",\n            \"phone\": \"9777965236\",\n            \"createdAt\": \"2022-01-30T07:48:55.697Z\",\n            \"updatedAt\": \"2022-01-30T07:58:06.353Z\",\n            \"__v\": 0\n        },\n        {\n            \"_id\": \"61f6430e62f6fc3764104d43\",\n            \"first_name\": \"Aditya\",\n            \"last_name\": \"Mishra\",\n            \"email\": \"aditya.mishra@gmail.com\",\n            \"phone\": \"9777852369\",\n            \"createdAt\": \"2022-01-30T07:49:34.981Z\",\n            \"updatedAt\": \"2022-01-30T07:49:34.981Z\",\n            \"__v\": 0\n        }\n    ]\n}"
+						}
+					]
+				},
+				{
+					"name": "Delete User",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"filter\": {\n        \"last_name\": \"Mishra\"\n    }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/user/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"user",
+								""
+							]
+						},
+						"description": "## Request to Delete\n\n### Required Fields\n* filter: Object \n  filter object takes in the filters for User documents to delete\n\n  filter object can have either of the following set of fields\n  >* _id: String | Optional\n\n  OR\n\n  >* first_name: String | Optional\n  >* last_name: String | Optional\n  >* email: String | Optional\n  >* phone: Number | Optional\n\n  **NOTE: Empty filter object indicates to delete all the User documents**"
+					},
+					"response": [
+						{
+							"name": "Delete User 1",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"filter\": {\n        \"last_name\": \"Ashar\"\n    }\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:3000/api/user/",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"user",
+										""
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "46"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"2e-W0d09Gs6mJOAwn08qnZtN2HXvEo\""
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 30 Jan 2022 09:29:26 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": \"success\",\n    \"data\": {\n        \"deletedCount\": 0\n    }\n}"
+						},
+						{
+							"name": "Delete User 2",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"filter\": {\n        \"last_name\": \"Mishra\"\n    }\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:3000/api/user/",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"user",
+										""
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "46"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"2e-fnBHT9x14gpQhcBeu6hp3CP7oys\""
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 30 Jan 2022 09:29:50 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": \"success\",\n    \"data\": {\n        \"deletedCount\": 1\n    }\n}"
+						}
+					]
+				}
+			],
+			"description": "###### API endpoints to help users interact with the User Service"
+		},
+		{
+			"name": "Interaction Service",
+			"item": [
+				{
+					"name": "Like Content",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"content_id\": \"61f64b68166fb3d3a1107e15\",\n    \"user_id\": \"61f6429b62f6fc3764104d3e\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/user-interaction/like",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"user-interaction",
+								"like"
+							]
+						},
+						"description": "## Request to Like Content Interaction\n\n### Required Fields\n* content_id: String\n* user_id: String\n\n**NOTE: content_id and user_id must be valid id of a previously existing Content document and User document respectively**"
+					},
+					"response": [
+						{
+							"name": "Like Content 1",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"content_id\": \"61f64b48166fb3d3a1107e0e\",\n    \"user_id\": \"61f6429b62f6fc3764104d3d\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:3000/api/user-interaction/like",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"user-interaction",
+										"like"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "72"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"48-MiCg8VMgfrXIihWQtpb8linExwY\""
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 30 Jan 2022 08:41:28 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": \"success\",\n    \"data\": {\n        \"liked_content\": \"61f64b48166fb3d3a1107e0e\"\n    }\n}"
+						},
+						{
+							"name": "Like Content 2",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"content_id\": \"61f64b68166fb3d3a1107e15\",\n    \"user_id\": \"61f6429b62f6fc3764104d3e\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:3000/api/user-interaction/like",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"user-interaction",
+										"like"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "59"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"3b-vfuH/BIotCVuimgrH9KTFuHtRO4\""
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 30 Jan 2022 08:47:54 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": \"success\",\n    \"data\": {\n        \"message\": \"User doesnt exist\"\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "Unlike Content",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"content_id\": \"61f64b48166fb3d3a1107e0e\",\n    \"user_id\": \"61f6429b62f6fc3764104d3d\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/user-interaction/unlike",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"user-interaction",
+								"unlike"
+							]
+						},
+						"description": "## Request to Unlike Content Interaction\n\n### Required Fields\n* content_id: String\n* user_id: String\n\n**NOTE: content_id and user_id must be valid id of a previously existing Content document and User document respectively**"
+					},
+					"response": [
+						{
+							"name": "Unlike Content",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"content_id\": \"61f64b48166fb3d3a1107e0e\",\n    \"user_id\": \"61f6429b62f6fc3764104d3d\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:3000/api/user-interaction/unlike",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"user-interaction",
+										"unlike"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "74"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"4a-fSf9x4AcFLYrdDLKrJSIAtq9Bfw\""
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 30 Jan 2022 08:48:50 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": \"success\",\n    \"data\": {\n        \"unliked_content\": \"61f64b48166fb3d3a1107e0e\"\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "Read Content",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"content_id\": \"61f64b68166fb3d3a1107e15\",\n    \"user_id\": \"61f6429b62f6fc3764104d3e\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/user-interaction/read",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"user-interaction",
+								"read"
+							]
+						},
+						"description": "## Request to handle Read Content Ineraction\n\n### Required Fields\n* content_id: String\n* user_id: String\n\n**NOTE: content_id and user_id must be valid id of a previously existing Content document and User document respectively**"
+					},
+					"response": [
+						{
+							"name": "Read Content 1",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"content_id\": \"61f64b68166fb3d3a1107e15\",\n    \"user_id\": \"61f6429b62f6fc3764104d3d\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:3000/api/user-interaction/read",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"user-interaction",
+										"read"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "71"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"47-s6IKjhJOdHdhlKMKJfk+82k5Ufg\""
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 30 Jan 2022 08:47:05 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": \"success\",\n    \"data\": {\n        \"read_content\": \"61f64b68166fb3d3a1107e15\"\n    }\n}"
+						},
+						{
+							"name": "Read Content 2",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"content_id\": \"61f64b68166fb3d3a1107e15\",\n    \"user_id\": \"61f6429b62f6fc3764104d3e\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:3000/api/user-interaction/read",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"user-interaction",
+										"read"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "59"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"3b-vfuH/BIotCVuimgrH9KTFuHtRO4\""
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 30 Jan 2022 08:47:35 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": \"success\",\n    \"data\": {\n        \"message\": \"User doesnt exist\"\n    }\n}"
+						}
+					]
+				}
+			],
+			"description": "###### API endpoints to help users interact with the User Interaction Service"
+		}
+	]
+}
