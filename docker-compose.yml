@@ -6,72 +6,64 @@ services:
   mongo_db:
     image: mongo:latest
     container_name: pratilipi-mongo
-    ports:
-      - "27017:27017"
     volumes:
       - mongo_db:/data/db
     restart: on-failure
+    network_mode: host
 
   # RABBIT MQ
   rabbitmq:
     image: rabbitmq:3.6.6-management
     container_name: pratilipi-rabbitmq
     restart: on-failure
-    ports:
-      - "5672:5672"
-      - "15672:15672"
-    networks:
-      - rabbitmq_nodejs
+    network_mode: host
   
   # USER SERVICE
   pratilipi-user-service:
     build: ./user-service
     container_name: pratilipi-user-service
     restart: on-failure
+    network_mode: host
     environment:
       - NODE_ENV=development
       - PORT=4000
-      - RABBITMQ_URL=amqp://guest:guest@rabbitmq:5672
-      - MONGO_URL=mongodb://mongo_db:27017/userService
+      - RABBITMQ_URL=amqp://localhost:5672
+      - MONGO_URL=mongodb://localhost:27017/userService
     depends_on:
       - rabbitmq
       - mongo_db
-    networks:
-      - rabbitmq_nodejs
 
   # CONTENT SERVICE
   pratilipi-content-service:
     build: ./content-service
     container_name: pratilipi-content-service
     restart: on-failure
+    network_mode: host
     environment:
       - NODE_ENV=development
       - PORT=5000
-      - RABBITMQ_URL=amqp://guest:guest@rabbitmq:5672
-      - MONGO_URL=mongodb://mongo_db:27017/contentService
+      - RABBITMQ_URL=amqp://localhost:5672
+      - MONGO_URL=mongodb://localhost:27017/contentService
     depends_on:
       - rabbitmq
       - mongo_db
-    networks:
-      - rabbitmq_nodejs
 
   # USER INTERACTION SERVICE
   pratilipi-user-interaction-service:
     build: ./user-interaction-service
     container_name: pratilipi-user-interaction-service
     restart: on-failure
+    network_mode: host
     environment:
       - NODE_ENV=development
       - PORT=6000
-      - RABBITMQ_URL=amqp://guest:guest@rabbitmq:5672
-      - MONGO_URL=mongodb://mongo_db:27017/userInteractionService
+      - RABBITMQ_URL=amqp://localhost:5672
+      - MONGO_URL=mongodb://localhost:27017/userInteractionService
     depends_on:
       - pratilipi-user-service
       - pratilipi-content-service
       - rabbitmq
       - mongo_db
-    networks:
-      - rabbitmq_nodejs
 
   # API GATEWAY
   pratilipi-api-gateway:
@@ -81,20 +73,13 @@ services:
     environment:
       - NODE_ENV=development
       - PORT=3000
-      - RABBITMQ_URL=amqp://guest:guest@rabbitmq:5672
-    ports:
-      - 3000:3000
+      - RABBITMQ_URL=amqp://localhost:5672
+    network_mode: host
     depends_on:
       - pratilipi-user-service
       - pratilipi-content-service
       - pratilipi-user-interaction-service
       - rabbitmq
-    networks:
-      - rabbitmq_nodejs
 
 volumes:
   mongo_db: {}
-
-networks:
-  rabbitmq_nodejs:
-    driver: bridge

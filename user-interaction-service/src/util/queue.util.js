@@ -127,6 +127,7 @@ const initializeQueues = async () => {
     } catch (error) {
 
         logger.error(`[AMQP] initializeQueues error: ${error}`);
+        process.exit(1);
 
     }
 
