@@ -41,3 +41,41 @@ There are 3 microservices in this project and one api gateway:
 
 MongoDb is used for databases. Each of the three microservice has its own database, and is only responsible for handling it.
 RabbitMQ is used for messaging. Each of the three microservice has its own queues for various operations related to that microservice.
+
+# High Level Diagram
+![High Level Diagram for the Microservices Architecture](/images/Pratilipi_HLD.drawio.png "High Level Diagram for the Microservices Architecture")
+
+# Low Level Diagrams
+
+The Blue Message Queues in the diagram below are persistent queues.
+The Purple Message Queues in the diagram below are temporary queues made for every request to the microservice which immediately gets deleted after the response is received.
+
+
+> # Interaction Between User Microservice and API Gateway
+> ![Low Level Diagram for Interaction between User Service and API Gateway](/images/LLD_User_API.drawio.png "Low Level Diagram for Interaction between User Service and API Gateway")
+<br>
+<br>
+> # Interaction Between Content Microservice and API Gateway
+> ![Low Level Diagram for Interaction between Content Service and API Gateway](/images/LLD_Content_API-1.drawio.png "Low Level Diagram for Interaction between Content Service and API Gateway")
+> ![Low Level Diagram for Interaction between Content Service and API Gateway](/images/LLD_Content_API-2.drawio.png "Low Level Diagram for Interaction between Content Service and API Gateway")
+
+<br>
+<br>
+
+> # Interaction Between User Interaction Microservice and API Gateway
+> ![Low Level Diagram for Interaction between User Interaction Service and API Gateway](/images/LLD_Interaction_API.drawio.png "Low Level Diagram for Interaction between User Interaction Service and API Gateway")
+
+<br>
+<br>
+
+> # Interaction Between User Interaction Microservice and Content Microservice
+> ![Low Level Diagram for Interaction between User Interaction Service and Content Service](/images/LLD_Interaction_Content.drawio.png "Low Level Diagram for Interaction between User Interaction Service and Content Service")
+> This interaction is used by contents service to get the top user interactions from User Interaction Service and also to initialize a document in the database of User Interaction Service whenever a new content is added.
+
+<br>
+<br>
+
+> # Interaction Between User Interaction Microservice and User Microservice
+> ![Low Level Diagram for Interaction between User Interaction Service and User Service](/images/LLD_Interaction_User.drawio.png "Low Level Diagram for Interaction between User Interaction Service and User Service")
+> This interaction is used by user service to verify whether the user making the interaction is a valid user or not and hence prevent recording false interactions.
+
