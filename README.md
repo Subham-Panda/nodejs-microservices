@@ -43,7 +43,7 @@ MongoDb is used for databases. Each of the three microservice has its own databa
 RabbitMQ is used for messaging. Each of the three microservice has its own queues for various operations related to that microservice.
 
 # High Level Diagram
-![High Level Diagram for the Microservices Architecture](/images/Pratilipi_HLD.drawio.png "High Level Diagram for the Microservices Architecture")
+![High Level Diagram for the Microservices Architecture](/images/HLD.drawio.png "High Level Diagram for the Microservices Architecture")
 
 # Low Level Diagrams
 
