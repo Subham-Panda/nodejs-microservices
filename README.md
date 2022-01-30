@@ -27,6 +27,8 @@ The rabbit mq dashboard can be accessed at http://localhost:15672/ with login cr
 
 >password: guest
 
+## NOTE: wait for 2 to 3 minutes after docker-compose has completed, before playing around with the api and testing it, since rabbitmq service inside the container takes some time to fire up, and the other services also start successfully after rabbitmq service is fired up successfully.
+
 # The documentation is available at:
 <a href="https://documenter.getpostman.com/view/17855939/UVeCQoNL" target="_blank">Link to the Documentation</a>
 
