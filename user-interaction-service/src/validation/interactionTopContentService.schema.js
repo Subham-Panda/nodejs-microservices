@@ -1,7 +1,7 @@
 const Joi = require('joi');
 
 const interactionTopContentServiceSchema = Joi.object({
-    total: Joi.number().required(),
+    total: Joi.number().optional(),
 })
 
 module.exports = interactionTopContentServiceSchema;
