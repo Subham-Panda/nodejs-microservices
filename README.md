@@ -28,7 +28,7 @@ The rabbit mq dashboard can be accessed at http://localhost:15672/ with login cr
 >password: guest
 
 # The documentation is available at:
-<a href="https://documenter.getpostman.com/view/17855939/UVeCQoNL">Link to the Documentation</a>
+<a href="https://documenter.getpostman.com/view/17855939/UVeCQoNL" target="_blank">Link to the Documentation</a>
 
 
 # Details of the microservices
