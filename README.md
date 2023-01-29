@@ -8,7 +8,7 @@
 git clone https://github.com/Subham-Panda/pratilipi-backend-microservices.git
 ```
 
-2. No inside the repository
+2. Go inside the repository folder
 ```
 cd pratilipi-backend-microservices
 ```
